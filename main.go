@@ -3,11 +3,41 @@
 package main
 
 import (
+	"context"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
+	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
+	"github.com/hertz-contrib/obs-opentelemetry/provider"
+	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
+	"os"
+	"sheepim-api-gateway/biz/infra/container"
 )
 
 func main() {
-	h := server.Default()
+	env := os.Getenv("ENV")
+	if env == "" {
+		env = "development"
+	}
+	container.InitGlobalContainer(env)
+	App := container.GetGlobalContainer()
+
+	serviceName := App.Config.ServerConfig.ServiceName
+	p := provider.NewOpenTelemetryProvider(
+		provider.WithServiceName(serviceName),
+		provider.WithExportEndpoint(App.Config.OpenTelemetryConfig.Endpoint),
+		provider.WithInsecure(),
+	)
+	hlog.SetLogger(hertzlogrus.NewLogger())
+	defer func(p provider.OtelProvider, ctx context.Context) {
+		err := p.Shutdown(ctx)
+		if err != nil {
+			hlog.Fatalf("server stopped with error:%s", err)
+		}
+	}(p, context.Background())
+	tracer, cfg := hertztracing.NewServerTracer()
+	h := server.Default(tracer)
+
+	h.Use(hertztracing.ServerMiddleware(cfg))
 
 	register(h)
 	h.Spin()
