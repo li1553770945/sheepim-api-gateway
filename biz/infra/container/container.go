@@ -3,12 +3,14 @@ package container
 import (
 	"sheepim-api-gateway/biz/infra/config"
 	"sheepim-api-gateway/biz/internal/service/user"
+	"sheepim-user-service/kitex_gen/user/userservice"
 	"sync"
 )
 
 type Container struct {
-	Config      *config.Config
-	UserService user.IUserService
+	Config        *config.Config
+	UserRpcClient *userservice.Client
+	UserService   user.IUserService
 }
 
 var APP *Container
@@ -26,11 +28,14 @@ func InitGlobalContainer(env string) {
 		APP = GetContainer(env)
 	})
 }
-func NewContainer(config *config.Config, userService user.IUserService,
+func NewContainer(config *config.Config,
+	userService user.IUserService,
+	userRpcClient *userservice.Client,
 ) *Container {
 	return &Container{
-		Config:      config,
-		UserService: userService,
+		Config:        config,
+		UserService:   userService,
+		UserRpcClient: userRpcClient,
 	}
 
 }

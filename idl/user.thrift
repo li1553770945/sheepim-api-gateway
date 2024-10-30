@@ -12,5 +12,5 @@ struct GetUserInfoResp {
 
 
 service UserService {
-    GetUserInfoResp GetUserInfo(1: GetUserInfoReq request) (api.get="/user-info");
+    GetUserInfoResp GetUserInfo(1: GetUserInfoReq request) (api.get="/api/user/user-info");
 }

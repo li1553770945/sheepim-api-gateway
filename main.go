@@ -9,6 +9,7 @@ import (
 	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	"github.com/hertz-contrib/obs-opentelemetry/provider"
 	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
+	"net"
 	"os"
 	"sheepim-api-gateway/biz/infra/container"
 )
@@ -22,6 +23,11 @@ func main() {
 	App := container.GetGlobalContainer()
 
 	serviceName := App.Config.ServerConfig.ServiceName
+	addr, err := net.ResolveTCPAddr("tcp", App.Config.ServerConfig.ListenAddress)
+	if err != nil {
+		panic("设置监听地址出错")
+	}
+
 	p := provider.NewOpenTelemetryProvider(
 		provider.WithServiceName(serviceName),
 		provider.WithExportEndpoint(App.Config.OpenTelemetryConfig.Endpoint),
@@ -35,7 +41,9 @@ func main() {
 		}
 	}(p, context.Background())
 	tracer, cfg := hertztracing.NewServerTracer()
-	h := server.Default(tracer)
+	h := server.Default(tracer,
+		server.WithHostPorts(addr.String()),
+	)
 
 	h.Use(hertztracing.ServerMiddleware(cfg))
 
