@@ -22,7 +22,7 @@ func GetUserInfo(ctx context.Context, c *app.RequestContext) {
 	if err != nil {
 		c.JSON(consts.StatusOK, utils.H{
 			"code": constant.InvalidInput,
-			"msg":  "参数校验失败",
+			"msg":  "参数校验失败:" + err.Error(),
 		})
 		return
 	}

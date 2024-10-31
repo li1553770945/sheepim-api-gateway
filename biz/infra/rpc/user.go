@@ -5,10 +5,10 @@ import (
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"log"
 	"sheepim-api-gateway/biz/infra/config"
-	"sheepim-auth-service/kitex_gen/user/userservice"
+	"sheepim-user-service/kitex_gen/user/userservice"
 )
 
-func NewUserClient(config *config.Config) *userservice.Client {
+func NewUserClient(config *config.Config) userservice.Client {
 	r, err := etcd.NewEtcdResolver([]string{config.EtcdConfig.Endpoint})
 	userClient, err := userservice.NewClient(
 		"sheepim-user-service",
@@ -17,5 +17,5 @@ func NewUserClient(config *config.Config) *userservice.Client {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &userClient
+	return userClient
 }
