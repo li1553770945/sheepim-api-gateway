@@ -15,7 +15,7 @@ func UserRespRpcToHttp(rpcResp *userservice.UserInfoResp) *user.GetUserInfoResp 
 	if rpcResp.BaseResp.Code != 0 {
 		return &user.GetUserInfoResp{
 			Code:    rpcResp.BaseResp.Code,
-			Message: &rpcResp.BaseResp.Message,
+			Message: rpcResp.BaseResp.Message,
 		}
 	}
 	return &user.GetUserInfoResp{

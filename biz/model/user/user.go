@@ -385,7 +385,7 @@ func (p *GetUserInfoRespData) String() string {
 
 type GetUserInfoResp struct {
 	Code    int32                `thrift:"code,1,required" form:"code,required" json:"code,required" query:"code,required"`
-	Message *string              `thrift:"message,2,optional" form:"message" json:"message,omitempty" query:"message"`
+	Message string               `thrift:"message,2,required" form:"message,required" json:"message,required" query:"message,required"`
 	Data    *GetUserInfoRespData `thrift:"data,3,optional" form:"data" json:"data,omitempty" query:"data"`
 }
 
@@ -397,13 +397,8 @@ func (p *GetUserInfoResp) GetCode() (v int32) {
 	return p.Code
 }
 
-var GetUserInfoResp_Message_DEFAULT string
-
 func (p *GetUserInfoResp) GetMessage() (v string) {
-	if !p.IsSetMessage() {
-		return GetUserInfoResp_Message_DEFAULT
-	}
-	return *p.Message
+	return p.Message
 }
 
 var GetUserInfoResp_Data_DEFAULT *GetUserInfoRespData
@@ -421,10 +416,6 @@ var fieldIDToName_GetUserInfoResp = map[int16]string{
 	3: "data",
 }
 
-func (p *GetUserInfoResp) IsSetMessage() bool {
-	return p.Message != nil
-}
-
 func (p *GetUserInfoResp) IsSetData() bool {
 	return p.Data != nil
 }
@@ -434,6 +425,7 @@ func (p *GetUserInfoResp) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetCode bool = false
+	var issetMessage bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -465,6 +457,7 @@ func (p *GetUserInfoResp) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
+				issetMessage = true
 			} else {
 				if err = iprot.Skip(fieldTypeId); err != nil {
 					goto SkipFieldError
@@ -498,6 +491,11 @@ func (p *GetUserInfoResp) Read(iprot thrift.TProtocol) (err error) {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
+
+	if !issetMessage {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
 	return nil
 ReadStructBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
@@ -529,7 +527,7 @@ func (p *GetUserInfoResp) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Message = &v
+		p.Message = v
 	}
 	return nil
 }
@@ -597,16 +595,14 @@ WriteFieldEndError:
 }
 
 func (p *GetUserInfoResp) writeField2(oprot thrift.TProtocol) (err error) {
-	if p.IsSetMessage() {
-		if err = oprot.WriteFieldBegin("message", thrift.STRING, 2); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(*p.Message); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("message", thrift.STRING, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Message); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:

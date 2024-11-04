@@ -12,7 +12,7 @@ struct GetUserInfoRespData {
 
 struct GetUserInfoResp{
     1: required i32 code;
-    2: optional string message;
+    2: required string message;
     3: optional GetUserInfoRespData data;
 }
 
