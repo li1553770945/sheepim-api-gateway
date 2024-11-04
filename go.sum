@@ -158,6 +158,8 @@ github.com/jtolds/gls v4.20.0+incompatible h1:xdiiI2gbIgH/gLH7ADydsJ1uDOEzR8yvV7
 github.com/jtolds/gls v4.20.0+incompatible/go.mod h1:QJZ7F/aHp+rZTRtaJ1ow/lLfFfVYBRgL+9YlvaHOwJU=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
+github.com/kitex-contrib/obs-opentelemetry v0.2.7 h1:at3LBOR6n2QPzP6UyASBUJUte/1bThoVAGx9SbTte2c=
+github.com/kitex-contrib/obs-opentelemetry v0.2.7/go.mod h1:D/MrXWtvZY5ZeNxw8KWx+da8g17N5aT0CkedbUzvmGE=
 github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241010093641-c58c6426d043 h1:BbbHFITAydBA+7X5IBk+N48fvTj8oTzgORc6rr4vKPc=
 github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241010093641-c58c6426d043/go.mod h1:naiLX9zwKBzVA41wtvvmtSZdbCihqIT9RnOb8GZv8A4=
 github.com/kitex-contrib/registry-etcd v0.2.5 h1:16On5GQAmN9tdbFy95QtwGH3aTWnW/BfdvdDmzLIytE=

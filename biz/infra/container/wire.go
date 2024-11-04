@@ -11,11 +11,9 @@ import (
 	"sheepim-api-gateway/biz/internal/service/user"
 )
 
-func GetContainer(env string) *Container {
+func GetContainer(config *config.Config) *Container {
 	panic(wire.Build(
 
-		//infra
-		config.InitConfig,
 		rpc.NewUserClient,
 		rpc.NewAuthClient,
 

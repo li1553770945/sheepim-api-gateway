@@ -15,12 +15,11 @@ import (
 
 // Injectors from wire.go:
 
-func GetContainer(env string) *Container {
-	configConfig := config.InitConfig(env)
-	client := rpc.NewUserClient(configConfig)
+func GetContainer(config2 *config.Config) *Container {
+	client := rpc.NewUserClient(config2)
 	iUserService := user.NewUserService(client)
-	authserviceClient := rpc.NewAuthClient(configConfig)
+	authserviceClient := rpc.NewAuthClient(config2)
 	iAuthService := auth.NewUserService(authserviceClient)
-	container := NewContainer(configConfig, iUserService, iAuthService)
+	container := NewContainer(config2, iUserService, iAuthService)
 	return container
 }

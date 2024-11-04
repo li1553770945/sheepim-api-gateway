@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"sheepim-api-gateway/biz/model/auth"
 	"sheepim-auth-service/kitex_gen/auth/authservice"
 )
@@ -10,7 +11,7 @@ type AuthServiceImpl struct {
 }
 
 type IAuthService interface {
-	Login(req *auth.LoginReq) (resp *auth.LoginResp, err error)
+	Login(ctx context.Context, req *auth.LoginReq) (resp *auth.LoginResp, err error)
 }
 
 func NewUserService(authRpcClient authservice.Client) IAuthService {

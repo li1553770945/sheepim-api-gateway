@@ -8,11 +8,11 @@ import (
 	"sheepim-api-gateway/biz/model/auth"
 )
 
-func (s *AuthServiceImpl) Login(req *auth.LoginReq) (*auth.LoginResp, error) {
+func (s *AuthServiceImpl) Login(ctx context.Context, req *auth.LoginReq) (*auth.LoginResp, error) {
 	rpcReq := assembler.LoginReqHttpToRpc(req)
 	rpcResp, err := s.AuthRpcClient.Login(context.Background(), rpcReq)
 	if err != nil {
-		klog.CtxErrorf(context.Background(), "调用认证服务失败:"+err.Error())
+		klog.CtxErrorf(ctx, "调用认证服务失败:"+err.Error())
 		return &auth.LoginResp{
 			Code:    constant.SystemError,
 			Message: "系统错误：调用认证服务失败",

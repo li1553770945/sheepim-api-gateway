@@ -6,13 +6,14 @@ import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	"github.com/hertz-contrib/obs-opentelemetry/provider"
 	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
 	"net"
 	"os"
+	configInfra "sheepim-api-gateway/biz/infra/config"
 	"sheepim-api-gateway/biz/infra/container"
 	"sheepim-api-gateway/biz/infra/log"
+	"sheepim-api-gateway/biz/infra/trace"
 )
 
 func main() {
@@ -20,30 +21,32 @@ func main() {
 	if env == "" {
 		env = "development"
 	}
-	container.InitGlobalContainer(env)
+	config := configInfra.GetConfig(env)
+	//初始化日志
 	log.InitLog()
-	App := container.GetGlobalContainer()
 
-	serviceName := App.Config.ServerConfig.ServiceName
-	addr, err := net.ResolveTCPAddr("tcp", App.Config.ServerConfig.ListenAddress)
-	if err != nil {
-		panic("设置监听地址出错")
-	}
+	//初始化链路追踪
 
-	p := provider.NewOpenTelemetryProvider(
-		provider.WithServiceName(serviceName),
-		provider.WithExportEndpoint(App.Config.OpenTelemetryConfig.Endpoint),
-		provider.WithInsecure(),
-	)
-	hlog.SetLogger(hertzlogrus.NewLogger())
+	p, tracer, cfg := trace.InitTrace(config)
 	defer func(p provider.OtelProvider, ctx context.Context) {
 		err := p.Shutdown(ctx)
 		if err != nil {
 			hlog.Fatalf("server stopped with error:%s", err)
 		}
 	}(p, context.Background())
-	tracer, cfg := hertztracing.NewServerTracer()
-	h := server.Default(tracer,
+
+	//初始化服务
+	container.InitGlobalContainer(config)
+	App := container.GetGlobalContainer()
+
+	//初始化server
+	addr, err := net.ResolveTCPAddr("tcp", App.Config.ServerConfig.ListenAddress)
+	if err != nil {
+		panic("设置监听地址出错")
+	}
+
+	h := server.Default(
+		tracer,
 		server.WithHostPorts(addr.String()),
 	)
 

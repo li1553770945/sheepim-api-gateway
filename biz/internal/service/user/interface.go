@@ -1,6 +1,7 @@
 package user
 
 import (
+	"context"
 	"sheepim-api-gateway/biz/model/user"
 	"sheepim-user-service/kitex_gen/user/userservice"
 )
@@ -10,7 +11,7 @@ type UserServiceImpl struct {
 }
 
 type IUserService interface {
-	GetUserInfo(req *user.GetUserInfoReq) (userinfo *user.GetUserInfoResp, err error)
+	GetUserInfo(ctx context.Context, req *user.GetUserInfoReq) (userinfo *user.GetUserInfoResp, err error)
 }
 
 func NewUserService(userRpcClient userservice.Client) IUserService {

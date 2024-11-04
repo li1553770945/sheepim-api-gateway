@@ -12,6 +12,7 @@ require (
 	github.com/hertz-contrib/obs-opentelemetry/logging/logrus v0.1.1
 	github.com/hertz-contrib/obs-opentelemetry/provider v0.3.0
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
+	github.com/kitex-contrib/obs-opentelemetry v0.2.7
 	github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241010093641-c58c6426d043
 	github.com/kitex-contrib/registry-etcd v0.2.5
 	gopkg.in/yaml.v3 v3.0.1

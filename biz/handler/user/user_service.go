@@ -27,6 +27,6 @@ func GetUserInfo(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	App := container.GetGlobalContainer()
-	resp, err := App.UserService.GetUserInfo(&req)
+	resp, err := App.UserService.GetUserInfo(ctx, &req)
 	c.JSON(consts.StatusOK, resp)
 }

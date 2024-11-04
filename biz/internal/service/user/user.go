@@ -7,11 +7,11 @@ import (
 	"sheepim-api-gateway/biz/model/user"
 )
 
-func (s *UserServiceImpl) GetUserInfo(req *user.GetUserInfoReq) (userinfo *user.GetUserInfoResp, err error) {
+func (s *UserServiceImpl) GetUserInfo(ctx context.Context, req *user.GetUserInfoReq) (userinfo *user.GetUserInfoResp, err error) {
 	rpcReq := assembler.UserReqHttpToRpc(req)
 	rpcResp, err := s.UserRpcClient.GetUserInfo(context.Background(), rpcReq)
 	if err != nil {
-		klog.CtxErrorf(context.Background(), "调用用户服务失败:"+err.Error())
+		klog.CtxErrorf(ctx, "调用用户服务失败:"+err.Error())
 		return
 	}
 	return assembler.UserRespRpcToHttp(rpcResp), nil

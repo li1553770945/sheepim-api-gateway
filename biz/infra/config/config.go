@@ -43,7 +43,7 @@ type Config struct {
 	RpcConfig           RpcConfig           `yaml:"rpc"`
 }
 
-func InitConfig(env string) *Config {
+func GetConfig(env string) *Config {
 	if env != constant.EnvProduction && env != constant.EnvDevelopment {
 		panic(fmt.Sprintf("环境必须是%s或者%s之一", constant.EnvProduction, constant.EnvDevelopment))
 	}
