@@ -29,12 +29,18 @@ type DatabaseConfig struct {
 	Port     int32  `yaml:"port"`
 }
 
+type RpcConfig struct {
+	UserServiceName string `yaml:"user-service-name"`
+	AuthServiceName string `yaml:"auth-service-name"`
+}
+
 type Config struct {
 	Env                 string
 	ServerConfig        ServerConfig        `yaml:"server"`
 	OpenTelemetryConfig OpenTelemetryConfig `yaml:"open-telemetry"`
 	DatabaseConfig      DatabaseConfig      `yaml:"database"`
 	EtcdConfig          EtcdConfig          `yaml:"etcd"`
+	RpcConfig           RpcConfig           `yaml:"rpc"`
 }
 
 func InitConfig(env string) *Config {

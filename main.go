@@ -12,6 +12,7 @@ import (
 	"net"
 	"os"
 	"sheepim-api-gateway/biz/infra/container"
+	"sheepim-api-gateway/biz/infra/log"
 )
 
 func main() {
@@ -20,6 +21,7 @@ func main() {
 		env = "development"
 	}
 	container.InitGlobalContainer(env)
+	log.InitLog()
 	App := container.GetGlobalContainer()
 
 	serviceName := App.Config.ServerConfig.ServiceName

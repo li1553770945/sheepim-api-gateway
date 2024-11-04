@@ -3,6 +3,8 @@
 ## 初始化项目
 ```bash
 hz update -idl idl/user.thrift   
+hz update -idl idl/auth.thrift   
+
 cd biz/infra/container
 wire
 ```

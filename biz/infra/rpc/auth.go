@@ -4,17 +4,17 @@ import (
 	"github.com/cloudwego/kitex/client"
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"sheepim-api-gateway/biz/infra/config"
-	"sheepim-user-service/kitex_gen/user/userservice"
+	"sheepim-auth-service/kitex_gen/auth/authservice"
 )
 
-func NewUserClient(config *config.Config) userservice.Client {
+func NewAuthClient(config *config.Config) authservice.Client {
 	r, err := etcd.NewEtcdResolver([]string{config.EtcdConfig.Endpoint})
-	userClient, err := userservice.NewClient(
-		config.RpcConfig.UserServiceName,
+	userClient, err := authservice.NewClient(
+		config.RpcConfig.AuthServiceName,
 		client.WithResolver(r),
 	)
 	if err != nil {
-		panic("用户 RPC 客户端启动失败" + err.Error())
+		panic("认证 RPC 客户端启动失败" + err.Error())
 	}
 	return userClient
 }

@@ -9,6 +9,7 @@ package container
 import (
 	"sheepim-api-gateway/biz/infra/config"
 	"sheepim-api-gateway/biz/infra/rpc"
+	"sheepim-api-gateway/biz/internal/service/auth"
 	"sheepim-api-gateway/biz/internal/service/user"
 )
 
@@ -18,6 +19,8 @@ func GetContainer(env string) *Container {
 	configConfig := config.InitConfig(env)
 	client := rpc.NewUserClient(configConfig)
 	iUserService := user.NewUserService(client)
-	container := NewContainer(configConfig, iUserService)
+	authserviceClient := rpc.NewAuthClient(configConfig)
+	iAuthService := auth.NewUserService(authserviceClient)
+	container := NewContainer(configConfig, iUserService, iAuthService)
 	return container
 }

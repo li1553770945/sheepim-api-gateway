@@ -12,10 +12,12 @@ require (
 	github.com/hertz-contrib/obs-opentelemetry/logging/logrus v0.1.1
 	github.com/hertz-contrib/obs-opentelemetry/provider v0.3.0
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
+	github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241010093641-c58c6426d043
 	github.com/kitex-contrib/registry-etcd v0.2.5
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.12
+	sheepim-auth-service v0.0.0-00010101000000-000000000000
 	sheepim-user-service v0.0.0-00010101000000-000000000000
 )
 
@@ -102,3 +104,5 @@ require (
 )
 
 replace sheepim-user-service => ../sheepim-user-service
+
+replace sheepim-auth-service => ../sheepim-auth-service
