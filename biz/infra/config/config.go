@@ -17,10 +17,6 @@ type OpenTelemetryConfig struct {
 	Endpoint string `yaml:"endpoint"`
 }
 
-type EtcdConfig struct {
-	Endpoint string `yaml:"endpoint"`
-}
-
 type DatabaseConfig struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
@@ -39,7 +35,6 @@ type Config struct {
 	ServerConfig        ServerConfig        `yaml:"server"`
 	OpenTelemetryConfig OpenTelemetryConfig `yaml:"open-telemetry"`
 	DatabaseConfig      DatabaseConfig      `yaml:"database"`
-	EtcdConfig          EtcdConfig          `yaml:"etcd"`
 	RpcConfig           RpcConfig           `yaml:"rpc"`
 }
 
