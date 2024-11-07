@@ -13,4 +13,4 @@ ENV ENV=production GOPROXY=https://goproxy.cn
 RUN chmod +x build-app.sh && ./build-app.sh
 
 # 设置容器启动时运行的命令
-CMD ["./output/boostrap.sh"]
+CMD ["./output/bootstrap.sh"]
