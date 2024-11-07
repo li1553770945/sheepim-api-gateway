@@ -1,8 +1,8 @@
 package assembler
 
 import (
-	"sheepim-api-gateway/biz/model/user"
-	userservice "sheepim-user-service/kitex_gen/user"
+	"github.com/li1553770945/sheepim-api-gateway/biz/model/user"
+	userservice "github.com/li1553770945/sheepim-user-service/kitex_gen/user"
 )
 
 func UserReqHttpToRpc(httpReq *user.GetUserInfoReq) *userservice.UserInfoReq {

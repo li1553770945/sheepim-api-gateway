@@ -4,7 +4,7 @@ package user
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	user "sheepim-api-gateway/biz/handler/user"
+	user "github.com/li1553770945/sheepim-api-gateway/biz/handler/user"
 )
 
 /*

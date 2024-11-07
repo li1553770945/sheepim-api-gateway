@@ -4,7 +4,7 @@ package auth
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	auth "sheepim-api-gateway/biz/handler/auth"
+	auth "github.com/li1553770945/sheepim-api-gateway/biz/handler/auth"
 )
 
 /*

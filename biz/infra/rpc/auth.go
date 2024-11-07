@@ -5,12 +5,12 @@ import (
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	"sheepim-api-gateway/biz/infra/config"
-	"sheepim-auth-service/kitex_gen/auth/authservice"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
+	"github.com/li1553770945/sheepim-auth-service/kitex_gen/auth/authservice"
 )
 
 func NewAuthClient(config *config.Config) authservice.Client {
-	r, err := etcd.NewEtcdResolver([]string{config.EtcdConfig.Endpoint})
+	r, err := etcd.NewEtcdResolver(config.EtcdConfig.Endpoint)
 	userClient, err := authservice.NewClient(
 		config.RpcConfig.AuthServiceName,
 		client.WithResolver(r),

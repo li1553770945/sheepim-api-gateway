@@ -3,9 +3,9 @@ package auth
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"sheepim-api-gateway/biz/constant"
-	"sheepim-api-gateway/biz/internal/assembler"
-	"sheepim-api-gateway/biz/model/auth"
+	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/assembler"
+	"github.com/li1553770945/sheepim-api-gateway/biz/model/auth"
 )
 
 func (s *AuthServiceImpl) Login(ctx context.Context, req *auth.LoginReq) (*auth.LoginResp, error) {

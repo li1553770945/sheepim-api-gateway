@@ -2,10 +2,10 @@ package config
 
 import (
 	"fmt"
+	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
 	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"
-	"sheepim-api-gateway/biz/constant"
 )
 
 type ServerConfig struct {
@@ -17,25 +17,21 @@ type OpenTelemetryConfig struct {
 	Endpoint string `yaml:"endpoint"`
 }
 
-type DatabaseConfig struct {
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
-	Database string `yaml:"database"`
-	Address  string `yaml:"address"`
-	Port     int32  `yaml:"port"`
-}
-
 type RpcConfig struct {
 	UserServiceName string `yaml:"user-service-name"`
 	AuthServiceName string `yaml:"auth-service-name"`
+}
+
+type EtcdConfig struct {
+	Endpoint []string `yaml:"endpoint"`
 }
 
 type Config struct {
 	Env                 string
 	ServerConfig        ServerConfig        `yaml:"server"`
 	OpenTelemetryConfig OpenTelemetryConfig `yaml:"open-telemetry"`
-	DatabaseConfig      DatabaseConfig      `yaml:"database"`
 	RpcConfig           RpcConfig           `yaml:"rpc"`
+	EtcdConfig          EtcdConfig          `yaml:"etcd"`
 }
 
 func GetConfig(env string) *Config {

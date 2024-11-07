@@ -5,12 +5,12 @@ package user
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/common/utils"
-	"sheepim-api-gateway/biz/constant"
-	"sheepim-api-gateway/biz/infra/container"
+	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/container"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	user "sheepim-api-gateway/biz/model/user"
+	user "github.com/li1553770945/sheepim-api-gateway/biz/model/user"
 )
 
 // GetUserInfo .

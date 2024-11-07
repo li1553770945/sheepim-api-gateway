@@ -7,10 +7,10 @@
 package container
 
 import (
-	"sheepim-api-gateway/biz/infra/config"
-	"sheepim-api-gateway/biz/infra/rpc"
-	"sheepim-api-gateway/biz/internal/service/auth"
-	"sheepim-api-gateway/biz/internal/service/user"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/rpc"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/service/auth"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/service/user"
 )
 
 // Injectors from wire.go:

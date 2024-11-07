@@ -4,7 +4,7 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	router "sheepim-api-gateway/biz/router"
+	router "github.com/li1553770945/sheepim-api-gateway/biz/router"
 )
 
 // register registers all routers.

@@ -4,7 +4,7 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	handler "sheepim-api-gateway/biz/handler"
+	handler "github.com/li1553770945/sheepim-api-gateway/biz/handler"
 )
 
 // customizeRegister registers customize routers.

@@ -2,8 +2,8 @@ package user
 
 import (
 	"context"
-	"sheepim-api-gateway/biz/model/user"
-	"sheepim-user-service/kitex_gen/user/userservice"
+	"github.com/li1553770945/sheepim-api-gateway/biz/model/user"
+	"github.com/li1553770945/sheepim-user-service/kitex_gen/user/userservice"
 )
 
 type UserServiceImpl struct {

@@ -2,9 +2,9 @@ package database
 
 import (
 	"fmt"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"sheepim-user-service/biz/infra/config"
 )
 
 func NewDatabase(conf *config.Config) *gorm.DB {

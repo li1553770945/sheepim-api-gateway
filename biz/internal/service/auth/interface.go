@@ -2,8 +2,8 @@ package auth
 
 import (
 	"context"
-	"sheepim-api-gateway/biz/model/auth"
-	"sheepim-auth-service/kitex_gen/auth/authservice"
+	"github.com/li1553770945/sheepim-api-gateway/biz/model/auth"
+	"github.com/li1553770945/sheepim-auth-service/kitex_gen/auth/authservice"
 )
 
 type AuthServiceImpl struct {

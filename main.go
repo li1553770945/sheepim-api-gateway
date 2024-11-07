@@ -8,12 +8,12 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/hertz-contrib/obs-opentelemetry/provider"
 	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
+	configInfra "github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/container"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/log"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
 	"net"
 	"os"
-	configInfra "sheepim-api-gateway/biz/infra/config"
-	"sheepim-api-gateway/biz/infra/container"
-	"sheepim-api-gateway/biz/infra/log"
-	"sheepim-api-gateway/biz/infra/trace"
 )
 
 func main() {

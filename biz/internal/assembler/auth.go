@@ -1,8 +1,8 @@
 package assembler
 
 import (
-	"sheepim-api-gateway/biz/model/auth"
-	authservice "sheepim-auth-service/kitex_gen/auth"
+	"github.com/li1553770945/sheepim-api-gateway/biz/model/auth"
+	authservice "github.com/li1553770945/sheepim-auth-service/kitex_gen/auth"
 )
 
 func LoginReqHttpToRpc(httpReq *auth.LoginReq) *authservice.LoginReq {

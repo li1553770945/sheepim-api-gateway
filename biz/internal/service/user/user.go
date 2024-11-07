@@ -3,9 +3,9 @@ package user
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"sheepim-api-gateway/biz/constant"
-	"sheepim-api-gateway/biz/internal/assembler"
-	"sheepim-api-gateway/biz/model/user"
+	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/assembler"
+	"github.com/li1553770945/sheepim-api-gateway/biz/model/user"
 )
 
 func (s *UserServiceImpl) GetUserInfo(ctx context.Context, req *user.GetUserInfoReq) (userinfo *user.GetUserInfoResp, err error) {
