@@ -2,16 +2,16 @@ package assembler
 
 import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/model/user"
-	userservice "github.com/li1553770945/sheepim-user-service/kitex_gen/user"
+	userRpc "github.com/li1553770945/sheepim-user-service/kitex_gen/user"
 )
 
-func UserReqHttpToRpc(httpReq *user.GetUserInfoReq) *userservice.UserInfoReq {
-	return &userservice.UserInfoReq{
+func UserReqHttpToRpc(httpReq *user.GetUserInfoReq) *userRpc.UserInfoReq {
+	return &userRpc.UserInfoReq{
 		UserId: httpReq.GetUserId(),
 	}
 }
 
-func UserRespRpcToHttp(rpcResp *userservice.UserInfoResp) *user.GetUserInfoResp {
+func UserRespRpcToHttp(rpcResp *userRpc.UserInfoResp) *user.GetUserInfoResp {
 	if rpcResp.BaseResp.Code != 0 {
 		return &user.GetUserInfoResp{
 			Code:    rpcResp.BaseResp.Code,

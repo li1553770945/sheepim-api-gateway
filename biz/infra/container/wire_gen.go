@@ -9,17 +9,20 @@ package container
 import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/rpc"
-	"github.com/li1553770945/sheepim-api-gateway/biz/internal/service/auth"
-	"github.com/li1553770945/sheepim-api-gateway/biz/internal/service/user"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/auth"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/project"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/user"
 )
 
 // Injectors from wire.go:
 
 func GetContainer(config2 *config.Config) *Container {
 	client := rpc.NewUserClient(config2)
-	iUserService := user.NewUserService(client)
+	iUserController := user.NewUserController(client)
 	authserviceClient := rpc.NewAuthClient(config2)
-	iAuthService := auth.NewUserService(authserviceClient)
-	container := NewContainer(config2, iUserService, iAuthService)
+	iAuthController := auth.NewAuthController(authserviceClient)
+	projectserviceClient := rpc.NewProjectClient(config2)
+	iProjectController := project.NewProjectController(projectserviceClient)
+	container := NewContainer(config2, iUserController, iAuthController, iProjectController)
 	return container
 }

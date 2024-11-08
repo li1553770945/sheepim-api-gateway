@@ -28,6 +28,6 @@ func Login(ctx context.Context, c *app.RequestContext) {
 	}
 
 	App := container.GetGlobalContainer()
-	resp, err := App.AuthService.Login(ctx, &req)
+	resp := App.AuthController.Login(ctx, &req)
 	c.JSON(consts.StatusOK, resp)
 }

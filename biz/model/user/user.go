@@ -637,70 +637,70 @@ func (p *GetUserInfoResp) String() string {
 	return fmt.Sprintf("GetUserInfoResp(%+v)", *p)
 }
 
-type UserService interface {
+type UserController interface {
 	GetUserInfo(ctx context.Context, request *GetUserInfoReq) (r *GetUserInfoResp, err error)
 }
 
-type UserServiceClient struct {
+type UserControllerClient struct {
 	c thrift.TClient
 }
 
-func NewUserServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *UserServiceClient {
-	return &UserServiceClient{
+func NewUserControllerClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *UserControllerClient {
+	return &UserControllerClient{
 		c: thrift.NewTStandardClient(f.GetProtocol(t), f.GetProtocol(t)),
 	}
 }
 
-func NewUserServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *UserServiceClient {
-	return &UserServiceClient{
+func NewUserControllerClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *UserControllerClient {
+	return &UserControllerClient{
 		c: thrift.NewTStandardClient(iprot, oprot),
 	}
 }
 
-func NewUserServiceClient(c thrift.TClient) *UserServiceClient {
-	return &UserServiceClient{
+func NewUserControllerClient(c thrift.TClient) *UserControllerClient {
+	return &UserControllerClient{
 		c: c,
 	}
 }
 
-func (p *UserServiceClient) Client_() thrift.TClient {
+func (p *UserControllerClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *UserServiceClient) GetUserInfo(ctx context.Context, request *GetUserInfoReq) (r *GetUserInfoResp, err error) {
-	var _args UserServiceGetUserInfoArgs
+func (p *UserControllerClient) GetUserInfo(ctx context.Context, request *GetUserInfoReq) (r *GetUserInfoResp, err error) {
+	var _args UserControllerGetUserInfoArgs
 	_args.Request = request
-	var _result UserServiceGetUserInfoResult
+	var _result UserControllerGetUserInfoResult
 	if err = p.Client_().Call(ctx, "GetUserInfo", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-type UserServiceProcessor struct {
+type UserControllerProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
-	handler      UserService
+	handler      UserController
 }
 
-func (p *UserServiceProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
+func (p *UserControllerProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
 	p.processorMap[key] = processor
 }
 
-func (p *UserServiceProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
+func (p *UserControllerProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
 	processor, ok = p.processorMap[key]
 	return processor, ok
 }
 
-func (p *UserServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
+func (p *UserControllerProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
 	return p.processorMap
 }
 
-func NewUserServiceProcessor(handler UserService) *UserServiceProcessor {
-	self := &UserServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self.AddToProcessorMap("GetUserInfo", &userServiceProcessorGetUserInfo{handler: handler})
+func NewUserControllerProcessor(handler UserController) *UserControllerProcessor {
+	self := &UserControllerProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self.AddToProcessorMap("GetUserInfo", &userControllerProcessorGetUserInfo{handler: handler})
 	return self
 }
-func (p *UserServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+func (p *UserControllerProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
 	name, _, seqId, err := iprot.ReadMessageBegin()
 	if err != nil {
 		return false, err
@@ -718,12 +718,12 @@ func (p *UserServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.
 	return false, x
 }
 
-type userServiceProcessorGetUserInfo struct {
-	handler UserService
+type userControllerProcessorGetUserInfo struct {
+	handler UserController
 }
 
-func (p *userServiceProcessorGetUserInfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := UserServiceGetUserInfoArgs{}
+func (p *userControllerProcessorGetUserInfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := UserControllerGetUserInfoArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -736,7 +736,7 @@ func (p *userServiceProcessorGetUserInfo) Process(ctx context.Context, seqId int
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := UserServiceGetUserInfoResult{}
+	result := UserControllerGetUserInfoResult{}
 	var retval *GetUserInfoResp
 	if retval, err2 = p.handler.GetUserInfo(ctx, args.Request); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing GetUserInfo: "+err2.Error())
@@ -766,32 +766,32 @@ func (p *userServiceProcessorGetUserInfo) Process(ctx context.Context, seqId int
 	return true, err
 }
 
-type UserServiceGetUserInfoArgs struct {
+type UserControllerGetUserInfoArgs struct {
 	Request *GetUserInfoReq `thrift:"request,1"`
 }
 
-func NewUserServiceGetUserInfoArgs() *UserServiceGetUserInfoArgs {
-	return &UserServiceGetUserInfoArgs{}
+func NewUserControllerGetUserInfoArgs() *UserControllerGetUserInfoArgs {
+	return &UserControllerGetUserInfoArgs{}
 }
 
-var UserServiceGetUserInfoArgs_Request_DEFAULT *GetUserInfoReq
+var UserControllerGetUserInfoArgs_Request_DEFAULT *GetUserInfoReq
 
-func (p *UserServiceGetUserInfoArgs) GetRequest() (v *GetUserInfoReq) {
+func (p *UserControllerGetUserInfoArgs) GetRequest() (v *GetUserInfoReq) {
 	if !p.IsSetRequest() {
-		return UserServiceGetUserInfoArgs_Request_DEFAULT
+		return UserControllerGetUserInfoArgs_Request_DEFAULT
 	}
 	return p.Request
 }
 
-var fieldIDToName_UserServiceGetUserInfoArgs = map[int16]string{
+var fieldIDToName_UserControllerGetUserInfoArgs = map[int16]string{
 	1: "request",
 }
 
-func (p *UserServiceGetUserInfoArgs) IsSetRequest() bool {
+func (p *UserControllerGetUserInfoArgs) IsSetRequest() bool {
 	return p.Request != nil
 }
 
-func (p *UserServiceGetUserInfoArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *UserControllerGetUserInfoArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -840,7 +840,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceGetUserInfoArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserControllerGetUserInfoArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -850,7 +850,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceGetUserInfoArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *UserControllerGetUserInfoArgs) ReadField1(iprot thrift.TProtocol) error {
 	p.Request = NewGetUserInfoReq()
 	if err := p.Request.Read(iprot); err != nil {
 		return err
@@ -858,7 +858,7 @@ func (p *UserServiceGetUserInfoArgs) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UserServiceGetUserInfoArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *UserControllerGetUserInfoArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetUserInfo_args"); err != nil {
 		goto WriteStructBeginError
@@ -887,7 +887,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceGetUserInfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *UserControllerGetUserInfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -904,39 +904,39 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *UserServiceGetUserInfoArgs) String() string {
+func (p *UserControllerGetUserInfoArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceGetUserInfoArgs(%+v)", *p)
+	return fmt.Sprintf("UserControllerGetUserInfoArgs(%+v)", *p)
 }
 
-type UserServiceGetUserInfoResult struct {
+type UserControllerGetUserInfoResult struct {
 	Success *GetUserInfoResp `thrift:"success,0,optional"`
 }
 
-func NewUserServiceGetUserInfoResult() *UserServiceGetUserInfoResult {
-	return &UserServiceGetUserInfoResult{}
+func NewUserControllerGetUserInfoResult() *UserControllerGetUserInfoResult {
+	return &UserControllerGetUserInfoResult{}
 }
 
-var UserServiceGetUserInfoResult_Success_DEFAULT *GetUserInfoResp
+var UserControllerGetUserInfoResult_Success_DEFAULT *GetUserInfoResp
 
-func (p *UserServiceGetUserInfoResult) GetSuccess() (v *GetUserInfoResp) {
+func (p *UserControllerGetUserInfoResult) GetSuccess() (v *GetUserInfoResp) {
 	if !p.IsSetSuccess() {
-		return UserServiceGetUserInfoResult_Success_DEFAULT
+		return UserControllerGetUserInfoResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-var fieldIDToName_UserServiceGetUserInfoResult = map[int16]string{
+var fieldIDToName_UserControllerGetUserInfoResult = map[int16]string{
 	0: "success",
 }
 
-func (p *UserServiceGetUserInfoResult) IsSetSuccess() bool {
+func (p *UserControllerGetUserInfoResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UserServiceGetUserInfoResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *UserControllerGetUserInfoResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -985,7 +985,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceGetUserInfoResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserControllerGetUserInfoResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -995,7 +995,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceGetUserInfoResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *UserControllerGetUserInfoResult) ReadField0(iprot thrift.TProtocol) error {
 	p.Success = NewGetUserInfoResp()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
@@ -1003,7 +1003,7 @@ func (p *UserServiceGetUserInfoResult) ReadField0(iprot thrift.TProtocol) error 
 	return nil
 }
 
-func (p *UserServiceGetUserInfoResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *UserControllerGetUserInfoResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetUserInfo_result"); err != nil {
 		goto WriteStructBeginError
@@ -1032,7 +1032,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceGetUserInfoResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *UserControllerGetUserInfoResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -1051,9 +1051,9 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *UserServiceGetUserInfoResult) String() string {
+func (p *UserControllerGetUserInfoResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceGetUserInfoResult(%+v)", *p)
+	return fmt.Sprintf("UserControllerGetUserInfoResult(%+v)", *p)
 }

@@ -4,6 +4,7 @@
 ```bash
 hz update -idl idl/user.thrift   
 hz update -idl idl/auth.thrift   
+hz update -idl idl/project.thrift   
 
 cd biz/infra/container
 wire
@@ -14,7 +15,7 @@ wire
 
 server:
   listen-address: 0.0.0.0:8888
-  service-name: sheepim-user-service
+  service-name: sheepim-user-controller
 
 etcd:
   endpoint: 127.0.0.1:2379

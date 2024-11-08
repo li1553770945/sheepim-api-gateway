@@ -8,7 +8,7 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/model/user"
 )
 
-func (s *UserServiceImpl) GetUserInfo(ctx context.Context, req *user.GetUserInfoReq) (userinfo *user.GetUserInfoResp, err error) {
+func (s *UserControllerImpl) GetUserInfo(ctx context.Context, req *user.GetUserInfoReq) (userinfo *user.GetUserInfoResp) {
 	hlog.CtxInfof(ctx, "收到获取用户 id 为 %d 的用户信息请求", req.UserId)
 	rpcReq := assembler.UserReqHttpToRpc(req)
 
@@ -19,8 +19,8 @@ func (s *UserServiceImpl) GetUserInfo(ctx context.Context, req *user.GetUserInfo
 		return &user.GetUserInfoResp{
 			Code:    constant.SystemError,
 			Message: "系统错误：调用用户服务失败",
-		}, nil
+		}
 	}
 	hlog.CtxInfof(ctx, "调用用户服务成功，获取用户ID为的%d的用户信息，服务返回状态码:%d", req.GetUserId(), rpcResp.BaseResp.Code)
-	return assembler.UserRespRpcToHttp(rpcResp), nil
+	return assembler.UserRespRpcToHttp(rpcResp)
 }

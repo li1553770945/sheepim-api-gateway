@@ -15,6 +15,6 @@ struct LoginResp{
     3: optional LoginRespData data;
 }
 
-service AuthService {
+service AuthController {
     LoginResp Login(1:LoginReq request) (api.post="/api/auth/login");
 }

@@ -597,70 +597,70 @@ func (p *LoginResp) String() string {
 	return fmt.Sprintf("LoginResp(%+v)", *p)
 }
 
-type AuthService interface {
+type AuthController interface {
 	Login(ctx context.Context, request *LoginReq) (r *LoginResp, err error)
 }
 
-type AuthServiceClient struct {
+type AuthControllerClient struct {
 	c thrift.TClient
 }
 
-func NewAuthServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *AuthServiceClient {
-	return &AuthServiceClient{
+func NewAuthControllerClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *AuthControllerClient {
+	return &AuthControllerClient{
 		c: thrift.NewTStandardClient(f.GetProtocol(t), f.GetProtocol(t)),
 	}
 }
 
-func NewAuthServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *AuthServiceClient {
-	return &AuthServiceClient{
+func NewAuthControllerClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *AuthControllerClient {
+	return &AuthControllerClient{
 		c: thrift.NewTStandardClient(iprot, oprot),
 	}
 }
 
-func NewAuthServiceClient(c thrift.TClient) *AuthServiceClient {
-	return &AuthServiceClient{
+func NewAuthControllerClient(c thrift.TClient) *AuthControllerClient {
+	return &AuthControllerClient{
 		c: c,
 	}
 }
 
-func (p *AuthServiceClient) Client_() thrift.TClient {
+func (p *AuthControllerClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *AuthServiceClient) Login(ctx context.Context, request *LoginReq) (r *LoginResp, err error) {
-	var _args AuthServiceLoginArgs
+func (p *AuthControllerClient) Login(ctx context.Context, request *LoginReq) (r *LoginResp, err error) {
+	var _args AuthControllerLoginArgs
 	_args.Request = request
-	var _result AuthServiceLoginResult
+	var _result AuthControllerLoginResult
 	if err = p.Client_().Call(ctx, "Login", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-type AuthServiceProcessor struct {
+type AuthControllerProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
-	handler      AuthService
+	handler      AuthController
 }
 
-func (p *AuthServiceProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
+func (p *AuthControllerProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
 	p.processorMap[key] = processor
 }
 
-func (p *AuthServiceProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
+func (p *AuthControllerProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
 	processor, ok = p.processorMap[key]
 	return processor, ok
 }
 
-func (p *AuthServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
+func (p *AuthControllerProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
 	return p.processorMap
 }
 
-func NewAuthServiceProcessor(handler AuthService) *AuthServiceProcessor {
-	self := &AuthServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self.AddToProcessorMap("Login", &authServiceProcessorLogin{handler: handler})
+func NewAuthControllerProcessor(handler AuthController) *AuthControllerProcessor {
+	self := &AuthControllerProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self.AddToProcessorMap("Login", &authControllerProcessorLogin{handler: handler})
 	return self
 }
-func (p *AuthServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+func (p *AuthControllerProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
 	name, _, seqId, err := iprot.ReadMessageBegin()
 	if err != nil {
 		return false, err
@@ -678,12 +678,12 @@ func (p *AuthServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.
 	return false, x
 }
 
-type authServiceProcessorLogin struct {
-	handler AuthService
+type authControllerProcessorLogin struct {
+	handler AuthController
 }
 
-func (p *authServiceProcessorLogin) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := AuthServiceLoginArgs{}
+func (p *authControllerProcessorLogin) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := AuthControllerLoginArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -696,7 +696,7 @@ func (p *authServiceProcessorLogin) Process(ctx context.Context, seqId int32, ip
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := AuthServiceLoginResult{}
+	result := AuthControllerLoginResult{}
 	var retval *LoginResp
 	if retval, err2 = p.handler.Login(ctx, args.Request); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing Login: "+err2.Error())
@@ -726,32 +726,32 @@ func (p *authServiceProcessorLogin) Process(ctx context.Context, seqId int32, ip
 	return true, err
 }
 
-type AuthServiceLoginArgs struct {
+type AuthControllerLoginArgs struct {
 	Request *LoginReq `thrift:"request,1"`
 }
 
-func NewAuthServiceLoginArgs() *AuthServiceLoginArgs {
-	return &AuthServiceLoginArgs{}
+func NewAuthControllerLoginArgs() *AuthControllerLoginArgs {
+	return &AuthControllerLoginArgs{}
 }
 
-var AuthServiceLoginArgs_Request_DEFAULT *LoginReq
+var AuthControllerLoginArgs_Request_DEFAULT *LoginReq
 
-func (p *AuthServiceLoginArgs) GetRequest() (v *LoginReq) {
+func (p *AuthControllerLoginArgs) GetRequest() (v *LoginReq) {
 	if !p.IsSetRequest() {
-		return AuthServiceLoginArgs_Request_DEFAULT
+		return AuthControllerLoginArgs_Request_DEFAULT
 	}
 	return p.Request
 }
 
-var fieldIDToName_AuthServiceLoginArgs = map[int16]string{
+var fieldIDToName_AuthControllerLoginArgs = map[int16]string{
 	1: "request",
 }
 
-func (p *AuthServiceLoginArgs) IsSetRequest() bool {
+func (p *AuthControllerLoginArgs) IsSetRequest() bool {
 	return p.Request != nil
 }
 
-func (p *AuthServiceLoginArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *AuthControllerLoginArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -800,7 +800,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AuthServiceLoginArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AuthControllerLoginArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -810,7 +810,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *AuthServiceLoginArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *AuthControllerLoginArgs) ReadField1(iprot thrift.TProtocol) error {
 	p.Request = NewLoginReq()
 	if err := p.Request.Read(iprot); err != nil {
 		return err
@@ -818,7 +818,7 @@ func (p *AuthServiceLoginArgs) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *AuthServiceLoginArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *AuthControllerLoginArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("Login_args"); err != nil {
 		goto WriteStructBeginError
@@ -847,7 +847,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *AuthServiceLoginArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *AuthControllerLoginArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -864,39 +864,39 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *AuthServiceLoginArgs) String() string {
+func (p *AuthControllerLoginArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("AuthServiceLoginArgs(%+v)", *p)
+	return fmt.Sprintf("AuthControllerLoginArgs(%+v)", *p)
 }
 
-type AuthServiceLoginResult struct {
+type AuthControllerLoginResult struct {
 	Success *LoginResp `thrift:"success,0,optional"`
 }
 
-func NewAuthServiceLoginResult() *AuthServiceLoginResult {
-	return &AuthServiceLoginResult{}
+func NewAuthControllerLoginResult() *AuthControllerLoginResult {
+	return &AuthControllerLoginResult{}
 }
 
-var AuthServiceLoginResult_Success_DEFAULT *LoginResp
+var AuthControllerLoginResult_Success_DEFAULT *LoginResp
 
-func (p *AuthServiceLoginResult) GetSuccess() (v *LoginResp) {
+func (p *AuthControllerLoginResult) GetSuccess() (v *LoginResp) {
 	if !p.IsSetSuccess() {
-		return AuthServiceLoginResult_Success_DEFAULT
+		return AuthControllerLoginResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-var fieldIDToName_AuthServiceLoginResult = map[int16]string{
+var fieldIDToName_AuthControllerLoginResult = map[int16]string{
 	0: "success",
 }
 
-func (p *AuthServiceLoginResult) IsSetSuccess() bool {
+func (p *AuthControllerLoginResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *AuthServiceLoginResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *AuthControllerLoginResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -945,7 +945,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AuthServiceLoginResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AuthControllerLoginResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -955,7 +955,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *AuthServiceLoginResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *AuthControllerLoginResult) ReadField0(iprot thrift.TProtocol) error {
 	p.Success = NewLoginResp()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
@@ -963,7 +963,7 @@ func (p *AuthServiceLoginResult) ReadField0(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *AuthServiceLoginResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *AuthControllerLoginResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("Login_result"); err != nil {
 		goto WriteStructBeginError
@@ -992,7 +992,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *AuthServiceLoginResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *AuthControllerLoginResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -1011,9 +1011,9 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *AuthServiceLoginResult) String() string {
+func (p *AuthControllerLoginResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("AuthServiceLoginResult(%+v)", *p)
+	return fmt.Sprintf("AuthControllerLoginResult(%+v)", *p)
 }

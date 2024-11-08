@@ -6,16 +6,16 @@ import (
 	"github.com/li1553770945/sheepim-auth-service/kitex_gen/auth/authservice"
 )
 
-type AuthServiceImpl struct {
+type AuthControllerImpl struct {
 	AuthRpcClient authservice.Client
 }
 
-type IAuthService interface {
-	Login(ctx context.Context, req *auth.LoginReq) (resp *auth.LoginResp, err error)
+type IAuthController interface {
+	Login(ctx context.Context, req *auth.LoginReq) (resp *auth.LoginResp)
 }
 
-func NewUserService(authRpcClient authservice.Client) IAuthService {
-	return &AuthServiceImpl{
+func NewAuthController(authRpcClient authservice.Client) IAuthController {
+	return &AuthControllerImpl{
 		AuthRpcClient: authRpcClient,
 	}
 }

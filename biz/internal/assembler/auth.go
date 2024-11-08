@@ -2,17 +2,17 @@ package assembler
 
 import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/model/auth"
-	authservice "github.com/li1553770945/sheepim-auth-service/kitex_gen/auth"
+	authRpc "github.com/li1553770945/sheepim-auth-service/kitex_gen/auth"
 )
 
-func LoginReqHttpToRpc(httpReq *auth.LoginReq) *authservice.LoginReq {
-	return &authservice.LoginReq{
+func LoginReqHttpToRpc(httpReq *auth.LoginReq) *authRpc.LoginReq {
+	return &authRpc.LoginReq{
 		Username: httpReq.Username,
 		Password: httpReq.Password,
 	}
 }
 
-func LoginRespRpcToHttp(rpcResp *authservice.LoginResp) *auth.LoginResp {
+func LoginRespRpcToHttp(rpcResp *authRpc.LoginResp) *auth.LoginResp {
 	if rpcResp.BaseResp.Code != 0 {
 		return &auth.LoginResp{
 			Code:    rpcResp.BaseResp.Code,

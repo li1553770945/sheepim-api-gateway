@@ -9,7 +9,7 @@ import (
 )
 
 type ServerConfig struct {
-	ServiceName   string `yaml:"service-name"`
+	ServiceName   string `yaml:"controller-name"`
 	ListenAddress string `yaml:"listen-address"`
 }
 
@@ -18,8 +18,9 @@ type OpenTelemetryConfig struct {
 }
 
 type RpcConfig struct {
-	UserServiceName string `yaml:"user-service-name"`
-	AuthServiceName string `yaml:"auth-service-name"`
+	UserServiceName    string `yaml:"user-service-name"`
+	AuthServiceName    string `yaml:"auth-service-name"`
+	ProjectServiceName string `yaml:"project-service-name"`
 }
 
 type EtcdConfig struct {

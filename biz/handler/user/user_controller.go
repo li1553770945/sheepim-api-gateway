@@ -14,7 +14,7 @@ import (
 )
 
 // GetUserInfo .
-// @router /user-info [GET]
+// @router /api/user/user-info [GET]
 func GetUserInfo(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req user.GetUserInfoReq
@@ -27,6 +27,6 @@ func GetUserInfo(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	App := container.GetGlobalContainer()
-	resp, err := App.UserService.GetUserInfo(ctx, &req)
+	resp := App.UserController.GetUserInfo(ctx, &req)
 	c.JSON(consts.StatusOK, resp)
 }

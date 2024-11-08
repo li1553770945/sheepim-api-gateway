@@ -16,6 +16,6 @@ struct GetUserInfoResp{
     3: optional GetUserInfoRespData data;
 }
 
-service UserService {
-    GetUserInfoResp GetUserInfo(1: GetUserInfoReq request) (api.get="/api/user/user-info");
+service UserController {
+    GetUserInfoResp GetUserInfo(1: GetUserInfoReq request) (api.get="/api/users/user-info");
 }
