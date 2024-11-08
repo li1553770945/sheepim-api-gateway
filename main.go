@@ -12,6 +12,7 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/container"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/log"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
+	"github.com/li1553770945/sheepim-api-gateway/middleware"
 	"net"
 	"os"
 )
@@ -51,7 +52,7 @@ func main() {
 	)
 
 	h.Use(hertztracing.ServerMiddleware(cfg))
-
+	h.Use(middleware.TraceIdMiddleware())
 	register(h)
 	h.Spin()
 }
