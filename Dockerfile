@@ -14,3 +14,5 @@ RUN chmod +x build-app.sh && ./build-app.sh
 
 # 设置容器启动时运行的命令
 CMD ["./output/bootstrap.sh"]
+
+EXPOSE 9100
