@@ -2,6 +2,8 @@ module github.com/li1553770945/sheepim-api-gateway
 
 go 1.23.3
 
+replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
+
 require (
 	github.com/apache/thrift v0.21.0
 	github.com/cloudwego/hertz v0.9.3
@@ -12,10 +14,9 @@ require (
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
 	github.com/kitex-contrib/obs-opentelemetry v0.2.8
 	github.com/kitex-contrib/registry-etcd v0.2.5
-	github.com/li1553770945/personal-project-service v0.0.0-20241108150833-c445d310255c
-	github.com/li1553770945/sheepim-api-gateway v0.0.0-20241109071919-e28e448705e5
-	github.com/li1553770945/sheepim-auth-service v0.0.0-20241109073250-3d7800613fc8
-	github.com/li1553770945/sheepim-user-service v0.0.0-20241107154211-fc4ba16602fd
+	github.com/li1553770945/personal-project-service v0.0.0-20241109133607-91fa947e4917
+	github.com/li1553770945/sheepim-auth-service v0.0.0-20241109133116-c6fc6769def4
+	github.com/li1553770945/sheepim-user-service v0.0.0-20241109133437-cdadd34aa6af
 	go.opentelemetry.io/otel/trace v1.32.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -88,6 +89,7 @@ require (
 	golang.org/x/sync v0.9.0 // indirect
 	golang.org/x/sys v0.27.0 // indirect
 	golang.org/x/text v0.20.0 // indirect
+	google.golang.org/genproto v0.0.0-20241104194629-dd2ea8efbc28 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20241104194629-dd2ea8efbc28 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241104194629-dd2ea8efbc28 // indirect
 	google.golang.org/grpc v1.68.0 // indirect

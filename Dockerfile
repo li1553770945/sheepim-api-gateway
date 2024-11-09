@@ -1,5 +1,5 @@
 # 使用官方的 Go 镜像作为构建和运行的基础镜像
-FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/golang:1.23.2-bullseye
+FROM golang:1.23.3
 
 # 设置工作目录
 WORKDIR /app
