@@ -13,6 +13,7 @@ func InitTrace(config *config.Config) (provider.OtelProvider, serverconfig.Optio
 		provider.WithExportEndpoint(config.OpenTelemetryConfig.Endpoint),
 		provider.WithInsecure(),
 	)
+	print(config.ServerConfig.ServiceName)
 	tracer, cfg := hertztracing.NewServerTracer()
 	return p, tracer, cfg
 

@@ -9,7 +9,7 @@ import (
 )
 
 type ServerConfig struct {
-	ServiceName   string `yaml:"controller-name"`
+	ServiceName   string `yaml:"service-name"`
 	ListenAddress string `yaml:"listen-address"`
 }
 
