@@ -7,6 +7,8 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/container"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/assembler"
+	"github.com/li1553770945/sheepim-api-gateway/biz/middleware"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -21,12 +23,27 @@ func GetUserInfo(ctx context.Context, c *app.RequestContext) {
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.JSON(consts.StatusOK, utils.H{
-			"code": constant.InvalidInput,
-			"msg":  "参数校验失败:" + err.Error(),
+			"code":    constant.InvalidInput,
+			"message": "参数校验失败:" + err.Error(),
 		})
 		return
 	}
 	App := container.GetGlobalContainer()
 	resp := App.UserController.GetUserInfo(ctx, &req)
 	c.JSON(consts.StatusOK, resp)
+}
+
+// GetSelfInfo .
+// @router /api/users/me [GET]
+func GetSelfInfo(ctx context.Context, c *app.RequestContext) {
+	userInfo, err := middleware.GetUserInfoFromCtx(ctx)
+	if err != nil {
+		c.JSON(consts.StatusOK, utils.H{
+			"code":    constant.SystemError,
+			"message": err.Error(),
+		})
+		return
+	}
+	userInfoHttpResp := assembler.UserRespRpcToHttp(userInfo)
+	c.JSON(consts.StatusOK, userInfoHttpResp)
 }

@@ -23,6 +23,6 @@ func GetContainer(config2 *config.Config) *Container {
 	iAuthController := auth.NewAuthController(authserviceClient)
 	projectserviceClient := rpc.NewProjectClient(config2)
 	iProjectController := project.NewProjectController(projectserviceClient)
-	container := NewContainer(config2, iUserController, iAuthController, iProjectController)
+	container := NewContainer(config2, iUserController, iAuthController, iProjectController, authserviceClient, client)
 	return container
 }

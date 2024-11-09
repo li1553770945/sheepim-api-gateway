@@ -21,6 +21,7 @@ func Register(r *server.Hertz) {
 		_api := root.Group("/api", _apiMw()...)
 		{
 			_users := _api.Group("/users", _usersMw()...)
+			_users.GET("/me", append(_getselfinfoMw(), user.GetSelfInfo)...)
 			_users.GET("/user-info", append(_getuserinfoMw(), user.GetUserInfo)...)
 		}
 	}

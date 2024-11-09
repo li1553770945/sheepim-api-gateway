@@ -4,6 +4,7 @@ package user
 
 import (
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/li1553770945/sheepim-api-gateway/biz/middleware"
 )
 
 func rootMw() []app.HandlerFunc {
@@ -13,7 +14,10 @@ func rootMw() []app.HandlerFunc {
 
 func _getuserinfoMw() []app.HandlerFunc {
 	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.GetGlobalGlobalAuthMiddleware(), // 验证用户是否已登录
+		middleware.AdminMiddleware(),               // 检查用户是否具有管理员权限
+	}
 }
 
 func _apiMw() []app.HandlerFunc {
@@ -21,12 +25,15 @@ func _apiMw() []app.HandlerFunc {
 	return nil
 }
 
-func _userMw() []app.HandlerFunc {
+func _usersMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
 
-func _usersMw() []app.HandlerFunc {
+func _getselfinfoMw() []app.HandlerFunc {
 	// your code...
-	return nil
+
+	return []app.HandlerFunc{
+		middleware.GetGlobalGlobalAuthMiddleware(), // 验证用户是否已登录
+	}
 }

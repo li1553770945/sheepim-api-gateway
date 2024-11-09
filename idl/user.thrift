@@ -18,4 +18,5 @@ struct GetUserInfoResp{
 
 service UserController {
     GetUserInfoResp GetUserInfo(1: GetUserInfoReq request) (api.get="/api/users/user-info");
+    GetUserInfoResp GetSelfInfo(1: GetUserInfoReq request) (api.get="/api/users/me");
 }

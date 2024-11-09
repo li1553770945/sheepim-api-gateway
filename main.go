@@ -12,7 +12,8 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/container"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/log"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
-	"github.com/li1553770945/sheepim-api-gateway/middleware"
+	"github.com/li1553770945/sheepim-api-gateway/biz/middleware"
+	"github.com/li1553770945/sheepim-api-gateway/global_middleware"
 	"net"
 	"os"
 )
@@ -39,6 +40,7 @@ func main() {
 	//初始化服务
 	container.InitGlobalContainer(config)
 	App := container.GetGlobalContainer()
+	middleware.InitGlobalAuthMiddleware(App.AuthRpcClient, App.UserRpcClient)
 
 	//初始化server
 	addr, err := net.ResolveTCPAddr("tcp", App.Config.ServerConfig.ListenAddress)
@@ -52,7 +54,7 @@ func main() {
 	)
 
 	h.Use(hertztracing.ServerMiddleware(cfg))
-	h.Use(middleware.TraceIdMiddleware())
+	h.Use(global_middleware.TraceIdMiddleware())
 	register(h)
 	h.Spin()
 }
