@@ -14,6 +14,7 @@ require (
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
 	github.com/kitex-contrib/obs-opentelemetry v0.2.8
 	github.com/kitex-contrib/registry-etcd v0.2.5
+	github.com/li1553770945/personal-feedback-service v0.0.0-20241110102914-d77726554b60
 	github.com/li1553770945/personal-project-service v0.0.0-20241109133607-91fa947e4917
 	github.com/li1553770945/sheepim-auth-service v0.0.0-20241109133116-c6fc6769def4
 	github.com/li1553770945/sheepim-user-service v0.0.0-20241109133437-cdadd34aa6af
