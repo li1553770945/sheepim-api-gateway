@@ -17,9 +17,8 @@ func rpcCategoryDataRpcToHttp(data []*rpcFeedback.GetFeedbackCategoryRespData) [
 	var result = make([]*feedback.GetFeedbackCategoryRespData, 0)
 	for _, d := range data {
 		result = append(result, &feedback.GetFeedbackCategoryRespData{
-			ID:    d.Id,
-			Name:  d.Name,
-			Value: d.Value,
+			ID:   d.Id,
+			Name: d.Name,
 		})
 	}
 	return result
@@ -36,18 +35,20 @@ func GetFeedbackRespRpcToHttp(rpcResp *rpcFeedback.GetFeedbackResp) *feedback.Ge
 		Code:    rpcResp.BaseResp.Code,
 		Message: rpcResp.BaseResp.Message,
 		Data: &feedback.GetFeedbackRespData{
-			ID:      rpcResp.Id,
-			Title:   rpcResp.Title,
-			Content: rpcResp.Content,
-			Name:    rpcResp.Name,
-			Contact: rpcResp.Contact,
+			ID:        rpcResp.Id,
+			Title:     rpcResp.Title,
+			Content:   rpcResp.Content,
+			Name:      rpcResp.Name,
+			Contact:   rpcResp.Contact,
+			Category:  rpcResp.Category,
+			CreatedAt: rpcResp.CreatedAt,
 		},
 	}
 }
 
 func AddFeedbackReqHttpToRpc(req *feedback.AddFeedbackReq) *rpcFeedback.AddFeedBackReq {
 	return &rpcFeedback.AddFeedBackReq{ // 使用正确的类型名
-		CategoryId: req.CategoryID, // 修正字段名
+		CategoryId: req.CategoryId, // 修正字段名
 		Title:      req.Title,
 		Content:    req.Content,
 		Name:       req.Name,
@@ -67,7 +68,7 @@ func AddFeedbackRespRpcToHttp(rpcResp *rpcFeedback.AddFeedbackResp) *feedback.Ad
 
 func AddReplyReqHttpToRpc(req *feedback.AddReplyReq) *rpcFeedback.AddReplyReq {
 	return &rpcFeedback.AddReplyReq{
-		FeedbackId: req.FeedbackID, // 修正字段名
+		FeedbackId: req.FeedbackId, // 修正字段名
 		Content:    req.Content,
 	}
 }
@@ -81,11 +82,17 @@ func AddReplyRespRpcToHttp(rpcResp *rpcFeedback.AddReplyResp) *feedback.AddReply
 
 func GetReplyReqHttpToRpc(req *feedback.GetReplyReq) *rpcFeedback.GetReplyReq {
 	return &rpcFeedback.GetReplyReq{
-		FeedbackUuid: req.FeedbackUUID,
+		FeedbackUuid: req.FeedbackUuid,
 	}
 }
 
 func GetReplyRespRpcToHttp(rpcResp *rpcFeedback.GetReplyResp) *feedback.GetReplyResp {
+	if rpcResp.BaseResp.Code != 0 {
+		return &feedback.GetReplyResp{
+			Code:    rpcResp.BaseResp.Code,
+			Message: rpcResp.BaseResp.Message,
+		}
+	}
 	var content string
 	// 检查 Content 是否为 nil
 	if rpcResp.Content != nil {
@@ -96,7 +103,8 @@ func GetReplyRespRpcToHttp(rpcResp *rpcFeedback.GetReplyResp) *feedback.GetReply
 		Code:    rpcResp.BaseResp.Code,
 		Message: rpcResp.BaseResp.Message,
 		Data: &feedback.GetReplyRespData{
-			Content: content,
+			Content:   content,
+			CreatedAt: *rpcResp.CreatedAt,
 		},
 	}
 }
@@ -116,8 +124,11 @@ func rpcUnreadFeedbackDataRpcToHttp(data []*rpcFeedback.UnreadFeedbackData) []*f
 	var result []*feedback.UnreadFeedbackData
 	for _, d := range data {
 		result = append(result, &feedback.UnreadFeedbackData{
-			ID:    d.Id,
-			Title: d.Title,
+			ID:        d.Id,
+			Title:     d.Title,
+			Name:      d.Name,
+			CreatedAt: d.CreatedAt,
+			UUID:      d.Uuid,
 		})
 	}
 	return result

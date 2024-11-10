@@ -9,9 +9,8 @@ import (
 )
 
 type GetFeedbackCategoryRespData struct {
-	ID    int64  `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
-	Name  string `thrift:"name,2,required" form:"name,required" json:"name,required" query:"name,required"`
-	Value string `thrift:"value,3,required" form:"value,required" json:"value,required" query:"value,required"`
+	ID   int64  `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
+	Name string `thrift:"name,2,required" form:"name,required" json:"name,required" query:"name,required"`
 }
 
 func NewGetFeedbackCategoryRespData() *GetFeedbackCategoryRespData {
@@ -26,14 +25,9 @@ func (p *GetFeedbackCategoryRespData) GetName() (v string) {
 	return p.Name
 }
 
-func (p *GetFeedbackCategoryRespData) GetValue() (v string) {
-	return p.Value
-}
-
 var fieldIDToName_GetFeedbackCategoryRespData = map[int16]string{
 	1: "id",
 	2: "name",
-	3: "value",
 }
 
 func (p *GetFeedbackCategoryRespData) Read(iprot thrift.TProtocol) (err error) {
@@ -42,7 +36,6 @@ func (p *GetFeedbackCategoryRespData) Read(iprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	var issetID bool = false
 	var issetName bool = false
-	var issetValue bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -80,17 +73,6 @@ func (p *GetFeedbackCategoryRespData) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
-		case 3:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField3(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetValue = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -112,11 +94,6 @@ func (p *GetFeedbackCategoryRespData) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetName {
 		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetValue {
-		fieldId = 3
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -155,15 +132,6 @@ func (p *GetFeedbackCategoryRespData) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *GetFeedbackCategoryRespData) ReadField3(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Value = v
-	}
-	return nil
-}
-
 func (p *GetFeedbackCategoryRespData) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetFeedbackCategoryRespData"); err != nil {
@@ -176,10 +144,6 @@ func (p *GetFeedbackCategoryRespData) Write(oprot thrift.TProtocol) (err error) 
 		}
 		if err = p.writeField2(oprot); err != nil {
 			fieldId = 2
-			goto WriteFieldError
-		}
-		if err = p.writeField3(oprot); err != nil {
-			fieldId = 3
 			goto WriteFieldError
 		}
 
@@ -233,23 +197,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *GetFeedbackCategoryRespData) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("value", thrift.STRING, 3); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Value); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
 func (p *GetFeedbackCategoryRespData) String() string {
@@ -534,11 +481,13 @@ func (p *GetFeedbackCategoryResp) String() string {
 }
 
 type GetFeedbackRespData struct {
-	ID      int64   `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
-	Title   string  `thrift:"title,2,required" form:"title,required" json:"title,required" query:"title,required"`
-	Content string  `thrift:"content,3,required" form:"content,required" json:"content,required" query:"content,required"`
-	Name    string  `thrift:"name,4,required" form:"name,required" json:"name,required" query:"name,required"`
-	Contact *string `thrift:"contact,5,optional" form:"contact" json:"contact,omitempty" query:"contact"`
+	ID        int64  `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
+	Title     string `thrift:"title,2,required" form:"title,required" json:"title,required" query:"title,required"`
+	Content   string `thrift:"content,3,required" form:"content,required" json:"content,required" query:"content,required"`
+	Name      string `thrift:"name,4,required" form:"name,required" json:"name,required" query:"name,required"`
+	Contact   string `thrift:"contact,5,required" form:"contact,required" json:"contact,required" query:"contact,required"`
+	Category  string `thrift:"category,6,required" form:"category,required" json:"category,required" query:"category,required"`
+	CreatedAt int64  `thrift:"createdAt,7,required" form:"createdAt,required" json:"createdAt,required" query:"createdAt,required"`
 }
 
 func NewGetFeedbackRespData() *GetFeedbackRespData {
@@ -561,13 +510,16 @@ func (p *GetFeedbackRespData) GetName() (v string) {
 	return p.Name
 }
 
-var GetFeedbackRespData_Contact_DEFAULT string
-
 func (p *GetFeedbackRespData) GetContact() (v string) {
-	if !p.IsSetContact() {
-		return GetFeedbackRespData_Contact_DEFAULT
-	}
-	return *p.Contact
+	return p.Contact
+}
+
+func (p *GetFeedbackRespData) GetCategory() (v string) {
+	return p.Category
+}
+
+func (p *GetFeedbackRespData) GetCreatedAt() (v int64) {
+	return p.CreatedAt
 }
 
 var fieldIDToName_GetFeedbackRespData = map[int16]string{
@@ -576,10 +528,8 @@ var fieldIDToName_GetFeedbackRespData = map[int16]string{
 	3: "content",
 	4: "name",
 	5: "contact",
-}
-
-func (p *GetFeedbackRespData) IsSetContact() bool {
-	return p.Contact != nil
+	6: "category",
+	7: "createdAt",
 }
 
 func (p *GetFeedbackRespData) Read(iprot thrift.TProtocol) (err error) {
@@ -590,6 +540,9 @@ func (p *GetFeedbackRespData) Read(iprot thrift.TProtocol) (err error) {
 	var issetTitle bool = false
 	var issetContent bool = false
 	var issetName bool = false
+	var issetContact bool = false
+	var issetCategory bool = false
+	var issetCreatedAt bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -654,6 +607,29 @@ func (p *GetFeedbackRespData) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField5(iprot); err != nil {
 					goto ReadFieldError
 				}
+				issetContact = true
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 6:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetCategory = true
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField7(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetCreatedAt = true
 			} else {
 				if err = iprot.Skip(fieldTypeId); err != nil {
 					goto SkipFieldError
@@ -690,6 +666,21 @@ func (p *GetFeedbackRespData) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetName {
 		fieldId = 4
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetContact {
+		fieldId = 5
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetCategory {
+		fieldId = 6
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetCreatedAt {
+		fieldId = 7
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -750,7 +741,25 @@ func (p *GetFeedbackRespData) ReadField5(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.Contact = &v
+		p.Contact = v
+	}
+	return nil
+}
+
+func (p *GetFeedbackRespData) ReadField6(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.Category = v
+	}
+	return nil
+}
+
+func (p *GetFeedbackRespData) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		p.CreatedAt = v
 	}
 	return nil
 }
@@ -779,6 +788,14 @@ func (p *GetFeedbackRespData) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField5(oprot); err != nil {
 			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
 			goto WriteFieldError
 		}
 
@@ -869,22 +886,54 @@ WriteFieldEndError:
 }
 
 func (p *GetFeedbackRespData) writeField5(oprot thrift.TProtocol) (err error) {
-	if p.IsSetContact() {
-		if err = oprot.WriteFieldBegin("contact", thrift.STRING, 5); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(*p.Contact); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("contact", thrift.STRING, 5); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Contact); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+
+func (p *GetFeedbackRespData) writeField6(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("category", thrift.STRING, 6); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Category); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+
+func (p *GetFeedbackRespData) writeField7(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("createdAt", thrift.I64, 7); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI64(p.CreatedAt); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
 }
 
 func (p *GetFeedbackRespData) String() string {
@@ -1947,7 +1996,8 @@ func (p *AddReplyResp) String() string {
 }
 
 type GetReplyRespData struct {
-	Content string `thrift:"content,1,required" form:"content,required" json:"content,required" query:"content,required"`
+	Content   string `thrift:"content,1,required" form:"content,required" json:"content,required" query:"content,required"`
+	CreatedAt int64  `thrift:"createdAt,2,required" form:"createdAt,required" json:"createdAt,required" query:"createdAt,required"`
 }
 
 func NewGetReplyRespData() *GetReplyRespData {
@@ -1958,8 +2008,13 @@ func (p *GetReplyRespData) GetContent() (v string) {
 	return p.Content
 }
 
+func (p *GetReplyRespData) GetCreatedAt() (v int64) {
+	return p.CreatedAt
+}
+
 var fieldIDToName_GetReplyRespData = map[int16]string{
 	1: "content",
+	2: "createdAt",
 }
 
 func (p *GetReplyRespData) Read(iprot thrift.TProtocol) (err error) {
@@ -1967,6 +2022,7 @@ func (p *GetReplyRespData) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetContent bool = false
+	var issetCreatedAt bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -1993,6 +2049,17 @@ func (p *GetReplyRespData) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
+		case 2:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetCreatedAt = true
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -2009,6 +2076,11 @@ func (p *GetReplyRespData) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetContent {
 		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetCreatedAt {
+		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -2038,6 +2110,15 @@ func (p *GetReplyRespData) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *GetReplyRespData) ReadField2(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		p.CreatedAt = v
+	}
+	return nil
+}
+
 func (p *GetReplyRespData) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetReplyRespData"); err != nil {
@@ -2046,6 +2127,10 @@ func (p *GetReplyRespData) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -2082,6 +2167,23 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *GetReplyRespData) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("createdAt", thrift.I64, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI64(p.CreatedAt); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *GetReplyRespData) String() string {
@@ -2491,7 +2593,7 @@ func (p *GetFeedbackReq) String() string {
 }
 
 type AddFeedbackReq struct {
-	CategoryID int64   `thrift:"category_id,1,required" form:"category_id,required" json:"category_id,required"`
+	CategoryId int64   `thrift:"categoryId,1,required" form:"categoryId,required" json:"categoryId,required"`
 	Title      string  `thrift:"title,2,required" form:"title,required" json:"title,required"`
 	Content    string  `thrift:"content,3,required" form:"content,required" json:"content,required"`
 	Name       string  `thrift:"name,4,required" form:"name,required" json:"name,required"`
@@ -2502,8 +2604,8 @@ func NewAddFeedbackReq() *AddFeedbackReq {
 	return &AddFeedbackReq{}
 }
 
-func (p *AddFeedbackReq) GetCategoryID() (v int64) {
-	return p.CategoryID
+func (p *AddFeedbackReq) GetCategoryId() (v int64) {
+	return p.CategoryId
 }
 
 func (p *AddFeedbackReq) GetTitle() (v string) {
@@ -2528,7 +2630,7 @@ func (p *AddFeedbackReq) GetContact() (v string) {
 }
 
 var fieldIDToName_AddFeedbackReq = map[int16]string{
-	1: "category_id",
+	1: "categoryId",
 	2: "title",
 	3: "content",
 	4: "name",
@@ -2543,7 +2645,7 @@ func (p *AddFeedbackReq) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetCategoryID bool = false
+	var issetCategoryId bool = false
 	var issetTitle bool = false
 	var issetContent bool = false
 	var issetName bool = false
@@ -2567,7 +2669,7 @@ func (p *AddFeedbackReq) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetCategoryID = true
+				issetCategoryId = true
 			} else {
 				if err = iprot.Skip(fieldTypeId); err != nil {
 					goto SkipFieldError
@@ -2630,7 +2732,7 @@ func (p *AddFeedbackReq) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetCategoryID {
+	if !issetCategoryId {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
@@ -2671,7 +2773,7 @@ func (p *AddFeedbackReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
-		p.CategoryID = v
+		p.CategoryId = v
 	}
 	return nil
 }
@@ -2758,10 +2860,10 @@ WriteStructEndError:
 }
 
 func (p *AddFeedbackReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("category_id", thrift.I64, 1); err != nil {
+	if err = oprot.WriteFieldBegin("categoryId", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.CategoryID); err != nil {
+	if err := oprot.WriteI64(p.CategoryId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -2852,7 +2954,7 @@ func (p *AddFeedbackReq) String() string {
 }
 
 type AddReplyReq struct {
-	FeedbackID int64  `thrift:"feedback_id,1,required" form:"feedback_id,required" json:"feedback_id,required"`
+	FeedbackId int64  `thrift:"feedbackId,1,required" form:"feedbackId,required" json:"feedbackId,required"`
 	Content    string `thrift:"content,2,required" form:"content,required" json:"content,required"`
 }
 
@@ -2860,8 +2962,8 @@ func NewAddReplyReq() *AddReplyReq {
 	return &AddReplyReq{}
 }
 
-func (p *AddReplyReq) GetFeedbackID() (v int64) {
-	return p.FeedbackID
+func (p *AddReplyReq) GetFeedbackId() (v int64) {
+	return p.FeedbackId
 }
 
 func (p *AddReplyReq) GetContent() (v string) {
@@ -2869,7 +2971,7 @@ func (p *AddReplyReq) GetContent() (v string) {
 }
 
 var fieldIDToName_AddReplyReq = map[int16]string{
-	1: "feedback_id",
+	1: "feedbackId",
 	2: "content",
 }
 
@@ -2877,7 +2979,7 @@ func (p *AddReplyReq) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetFeedbackID bool = false
+	var issetFeedbackId bool = false
 	var issetContent bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
@@ -2899,7 +3001,7 @@ func (p *AddReplyReq) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetFeedbackID = true
+				issetFeedbackId = true
 			} else {
 				if err = iprot.Skip(fieldTypeId); err != nil {
 					goto SkipFieldError
@@ -2930,7 +3032,7 @@ func (p *AddReplyReq) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetFeedbackID {
+	if !issetFeedbackId {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
@@ -2961,7 +3063,7 @@ func (p *AddReplyReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
-		p.FeedbackID = v
+		p.FeedbackId = v
 	}
 	return nil
 }
@@ -3009,10 +3111,10 @@ WriteStructEndError:
 }
 
 func (p *AddReplyReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("feedback_id", thrift.I64, 1); err != nil {
+	if err = oprot.WriteFieldBegin("feedbackId", thrift.I64, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.FeedbackID); err != nil {
+	if err := oprot.WriteI64(p.FeedbackId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -3050,26 +3152,26 @@ func (p *AddReplyReq) String() string {
 }
 
 type GetReplyReq struct {
-	FeedbackUUID string `thrift:"feedback_uuid,1,required" json:"feedback_uuid,required" query:"feedback_uuid,required"`
+	FeedbackUuid string `thrift:"feedbackUuid,1,required" json:"feedbackUuid,required" query:"feedbackUuid,required"`
 }
 
 func NewGetReplyReq() *GetReplyReq {
 	return &GetReplyReq{}
 }
 
-func (p *GetReplyReq) GetFeedbackUUID() (v string) {
-	return p.FeedbackUUID
+func (p *GetReplyReq) GetFeedbackUuid() (v string) {
+	return p.FeedbackUuid
 }
 
 var fieldIDToName_GetReplyReq = map[int16]string{
-	1: "feedback_uuid",
+	1: "feedbackUuid",
 }
 
 func (p *GetReplyReq) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetFeedbackUUID bool = false
+	var issetFeedbackUuid bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -3090,7 +3192,7 @@ func (p *GetReplyReq) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetFeedbackUUID = true
+				issetFeedbackUuid = true
 			} else {
 				if err = iprot.Skip(fieldTypeId); err != nil {
 					goto SkipFieldError
@@ -3110,7 +3212,7 @@ func (p *GetReplyReq) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetFeedbackUUID {
+	if !issetFeedbackUuid {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
@@ -3136,7 +3238,7 @@ func (p *GetReplyReq) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		p.FeedbackUUID = v
+		p.FeedbackUuid = v
 	}
 	return nil
 }
@@ -3171,10 +3273,10 @@ WriteStructEndError:
 }
 
 func (p *GetReplyReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("feedback_uuid", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("feedbackUuid", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.FeedbackUUID); err != nil {
+	if err := oprot.WriteString(p.FeedbackUuid); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -3195,8 +3297,11 @@ func (p *GetReplyReq) String() string {
 }
 
 type UnreadFeedbackData struct {
-	ID    int64  `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
-	Title string `thrift:"title,2,required" form:"title,required" json:"title,required" query:"title,required"`
+	ID        int64  `thrift:"id,1,required" form:"id,required" json:"id,required" query:"id,required"`
+	Title     string `thrift:"title,2,required" form:"title,required" json:"title,required" query:"title,required"`
+	Name      string `thrift:"name,3,required" form:"name,required" json:"name,required" query:"name,required"`
+	CreatedAt int64  `thrift:"createdAt,4,required" form:"createdAt,required" json:"createdAt,required" query:"createdAt,required"`
+	UUID      string `thrift:"uuid,5,required" form:"uuid,required" json:"uuid,required" query:"uuid,required"`
 }
 
 func NewUnreadFeedbackData() *UnreadFeedbackData {
@@ -3211,9 +3316,24 @@ func (p *UnreadFeedbackData) GetTitle() (v string) {
 	return p.Title
 }
 
+func (p *UnreadFeedbackData) GetName() (v string) {
+	return p.Name
+}
+
+func (p *UnreadFeedbackData) GetCreatedAt() (v int64) {
+	return p.CreatedAt
+}
+
+func (p *UnreadFeedbackData) GetUUID() (v string) {
+	return p.UUID
+}
+
 var fieldIDToName_UnreadFeedbackData = map[int16]string{
 	1: "id",
 	2: "title",
+	3: "name",
+	4: "createdAt",
+	5: "uuid",
 }
 
 func (p *UnreadFeedbackData) Read(iprot thrift.TProtocol) (err error) {
@@ -3222,6 +3342,9 @@ func (p *UnreadFeedbackData) Read(iprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	var issetID bool = false
 	var issetTitle bool = false
+	var issetName bool = false
+	var issetCreatedAt bool = false
+	var issetUUID bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -3259,6 +3382,39 @@ func (p *UnreadFeedbackData) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetName = true
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 4:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField4(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetCreatedAt = true
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetUUID = true
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -3280,6 +3436,21 @@ func (p *UnreadFeedbackData) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetTitle {
 		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetName {
+		fieldId = 3
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetCreatedAt {
+		fieldId = 4
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetUUID {
+		fieldId = 5
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -3318,6 +3489,33 @@ func (p *UnreadFeedbackData) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *UnreadFeedbackData) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.Name = v
+	}
+	return nil
+}
+
+func (p *UnreadFeedbackData) ReadField4(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		p.CreatedAt = v
+	}
+	return nil
+}
+
+func (p *UnreadFeedbackData) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.UUID = v
+	}
+	return nil
+}
+
 func (p *UnreadFeedbackData) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("UnreadFeedbackData"); err != nil {
@@ -3330,6 +3528,18 @@ func (p *UnreadFeedbackData) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField2(oprot); err != nil {
 			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
+			goto WriteFieldError
+		}
+		if err = p.writeField5(oprot); err != nil {
+			fieldId = 5
 			goto WriteFieldError
 		}
 
@@ -3383,6 +3593,57 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *UnreadFeedbackData) writeField3(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("name", thrift.STRING, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Name); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *UnreadFeedbackData) writeField4(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("createdAt", thrift.I64, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI64(p.CreatedAt); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+
+func (p *UnreadFeedbackData) writeField5(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("uuid", thrift.STRING, 5); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.UUID); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
 }
 
 func (p *UnreadFeedbackData) String() string {

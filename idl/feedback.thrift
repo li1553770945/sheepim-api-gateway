@@ -3,12 +3,11 @@ namespace go feedback
 struct GetFeedbackCategoryRespData {
     1: required i64 id,
     2: required string name,
-    3: required string value
 }
 
 struct GetFeedbackCategoryResp {
-    1: required i32 code,
-    2: required string message,
+    1: required i32 code
+    2: required string message
     3: optional list<GetFeedbackCategoryRespData> data
 }
 
@@ -17,7 +16,9 @@ struct GetFeedbackRespData {
     2: required string title,
     3: required string content,
     4: required string name,
-    5: optional string contact
+    5: required string contact
+    6: required string category
+    7: required i64 createdAt
 }
 
 struct GetFeedbackResp {
@@ -48,6 +49,7 @@ struct AddReplyResp {
 
 struct GetReplyRespData {
     1: required string content
+    2: required i64 createdAt
 }
 
 struct GetReplyResp {
@@ -61,7 +63,7 @@ struct GetFeedbackReq {
 }
 
 struct AddFeedbackReq {
-    1: required i64 category_id (api.form="category_id"),
+    1: required i64 categoryId (api.form="categoryId"),
     2: required string title (api.form="title"),
     3: required string content (api.form="content"),
     4: required string name (api.form="name"),
@@ -69,17 +71,20 @@ struct AddFeedbackReq {
 }
 
 struct AddReplyReq {
-    1: required i64 feedback_id (api.form="feedback_id"),
+    1: required i64 feedbackId (api.form="feedbackId"),
     2: required string content (api.form="content")
 }
 
 struct GetReplyReq {
-    1: required string feedback_uuid (api.query="feedback_uuid")
+    1: required string feedbackUuid (api.query="feedbackUuid")
 }
 
 struct UnreadFeedbackData {
-    1: required i64 id,
+    1: required i64 id
     2: required string title
+    3: required string name
+    4: required i64 createdAt
+    5: required string uuid
 }
 
 struct GetUnreadFeedbackResp {

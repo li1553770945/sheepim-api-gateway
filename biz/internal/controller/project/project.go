@@ -35,7 +35,7 @@ func (c *ProjectControllerImpl) GetProjectNum(ctx context.Context) *project.Proj
 		hlog.CtxErrorf(ctx, "调用项目服务失败:"+err.Error())
 		return &project.ProjectNumResp{
 			Code:    constant.SystemError,
-			Message: "系统错误：调用用户服务失败",
+			Message: "系统错误：调用项目服务失败",
 		}
 	}
 	hlog.CtxInfof(ctx, "调用项目服务成功，服务返回状态码:%d", rpcResp.BaseResp.Code)
