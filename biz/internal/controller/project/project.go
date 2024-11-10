@@ -8,7 +8,7 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/model/project"
 )
 
-func (c ProjectControllerImpl) GetProjects(ctx context.Context, req *project.ProjectsReq) *project.ProjectsResp {
+func (c *ProjectControllerImpl) GetProjects(ctx context.Context, req *project.ProjectsReq) *project.ProjectsResp {
 	hlog.CtxInfof(ctx, "调用项目服务获取项目列表")
 	rpcReq := assembler.GetProjectsReqHttpToRpc(req)
 	// 调用 RPC 客户端获取项目列表
@@ -26,7 +26,7 @@ func (c ProjectControllerImpl) GetProjects(ctx context.Context, req *project.Pro
 	return assembler.GetProjectsRespRpcToHttp(rpcResp)
 }
 
-func (c ProjectControllerImpl) GetProjectNum(ctx context.Context) *project.ProjectNumResp {
+func (c *ProjectControllerImpl) GetProjectNum(ctx context.Context) *project.ProjectNumResp {
 	hlog.CtxInfof(ctx, "获取项目总数")
 
 	hlog.CtxInfof(ctx, "调用项目服务获取总数")
