@@ -15,9 +15,9 @@ require (
 	github.com/kitex-contrib/obs-opentelemetry v0.2.8
 	github.com/kitex-contrib/registry-etcd v0.2.5
 	github.com/li1553770945/personal-feedback-service v0.0.0-20241110120426-cf2cb99a8a3a
-	github.com/li1553770945/personal-project-service v0.0.0-20241109133607-91fa947e4917
+	github.com/li1553770945/personal-project-service v0.0.0-20241114062307-5f6ba3dd7238
 	github.com/li1553770945/sheepim-auth-service v0.0.0-20241109133116-c6fc6769def4
-	github.com/li1553770945/sheepim-user-service v0.0.0-20241109133437-cdadd34aa6af
+	github.com/li1553770945/sheepim-user-service v0.0.0-20241109174451-f4bf6bdeb5d2
 	go.opentelemetry.io/otel/trace v1.32.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -55,15 +55,8 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.23.0 // indirect
 	github.com/iancoleman/strcase v0.3.0 // indirect
-	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.1 // indirect
-	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jhump/protoreflect v1.17.0 // indirect
-	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241108060226-a2d88c8d88e9 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/gls v0.0.0-20220109145502-612d0167dce5 // indirect
@@ -76,9 +69,9 @@ require (
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
-	go.etcd.io/etcd/api/v3 v3.5.16 // indirect
-	go.etcd.io/etcd/client/pkg/v3 v3.5.16 // indirect
-	go.etcd.io/etcd/client/v3 v3.5.16 // indirect
+	go.etcd.io/etcd/api/v3 v3.5.17 // indirect
+	go.etcd.io/etcd/client/pkg/v3 v3.5.17 // indirect
+	go.etcd.io/etcd/client/v3 v3.5.17 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.57.0 // indirect
 	go.opentelemetry.io/contrib/propagators/b3 v1.32.0 // indirect
 	go.opentelemetry.io/contrib/propagators/ot v1.32.0 // indirect
@@ -93,16 +86,13 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/arch v0.12.0 // indirect
-	golang.org/x/crypto v0.29.0 // indirect
 	golang.org/x/net v0.31.0 // indirect
 	golang.org/x/sync v0.9.0 // indirect
 	golang.org/x/sys v0.27.0 // indirect
 	golang.org/x/text v0.20.0 // indirect
 	google.golang.org/genproto v0.0.0-20241104194629-dd2ea8efbc28 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20241104194629-dd2ea8efbc28 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241104194629-dd2ea8efbc28 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20241113202542-65e8d215514f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20241113202542-65e8d215514f // indirect
 	google.golang.org/grpc v1.68.0 // indirect
 	google.golang.org/protobuf v1.35.1 // indirect
-	gorm.io/driver/postgres v1.5.9 // indirect
-	gorm.io/gorm v1.25.12 // indirect
 )
