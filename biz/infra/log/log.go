@@ -2,6 +2,7 @@ package log
 
 import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	"io"
 	"os"
@@ -9,8 +10,9 @@ import (
 	"time"
 )
 
-func InitLog() {
-	hlog.SetLogger(hertzlogrus.NewLogger())
+func InitLog() *logrus.Logger {
+	logger := hertzlogrus.NewLogger()
+	hlog.SetLogger(logger)
 	hlog.SetLevel(hlog.LevelInfo)
 	if err := os.MkdirAll("logs", os.ModePerm); err != nil {
 		panic("创建日志文件夹失败：" + err.Error())
@@ -24,4 +26,5 @@ func InitLog() {
 	}
 	multiWriter := io.MultiWriter(logFile, os.Stdout)
 	hlog.SetOutput(multiWriter)
+	return logger
 }

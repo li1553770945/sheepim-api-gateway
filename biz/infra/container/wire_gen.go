@@ -8,7 +8,9 @@ package container
 
 import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/log"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/rpc"
+	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/auth"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/feedback"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/project"
@@ -17,15 +19,18 @@ import (
 
 // Injectors from wire.go:
 
-func GetContainer(config2 *config.Config) *Container {
-	client := rpc.NewUserClient(config2)
+func GetContainer(env string) *Container {
+	configConfig := config.GetConfig(env)
+	traceSturct := trace.InitTrace(configConfig)
+	logger := log.InitLog()
+	client := rpc.NewUserClient(configConfig)
 	iUserController := user.NewUserController(client)
-	authserviceClient := rpc.NewAuthClient(config2)
+	authserviceClient := rpc.NewAuthClient(configConfig)
 	iAuthController := auth.NewAuthController(authserviceClient)
-	projectserviceClient := rpc.NewProjectClient(config2)
+	projectserviceClient := rpc.NewProjectClient(configConfig)
 	iProjectController := project.NewProjectController(projectserviceClient)
-	feedbackserviceClient := rpc.NewFeedbackClient(config2)
+	feedbackserviceClient := rpc.NewFeedbackClient(configConfig)
 	iFeedbackController := feedback.NewFeedbackController(feedbackserviceClient)
-	container := NewContainer(config2, iUserController, iAuthController, iProjectController, iFeedbackController, authserviceClient, client)
+	container := NewContainer(configConfig, traceSturct, logger, iUserController, iAuthController, iProjectController, iFeedbackController, authserviceClient, client)
 	return container
 }

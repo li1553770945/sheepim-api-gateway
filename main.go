@@ -8,10 +8,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/hertz-contrib/obs-opentelemetry/provider"
 	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
-	configInfra "github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/container"
-	"github.com/li1553770945/sheepim-api-gateway/biz/infra/log"
-	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
 	"github.com/li1553770945/sheepim-api-gateway/biz/middleware"
 	"github.com/li1553770945/sheepim-api-gateway/global_middleware"
 	"net"
@@ -23,23 +20,18 @@ func main() {
 	if env == "" {
 		env = "development"
 	}
-	config := configInfra.GetConfig(env)
-	//初始化日志
-	log.InitLog()
+	container.InitGlobalContainer(env)
+	App := container.GetGlobalContainer()
 
-	//初始化链路追踪
-
-	p, tracer, cfg := trace.InitTrace(config)
 	defer func(p provider.OtelProvider, ctx context.Context) {
 		err := p.Shutdown(ctx)
 		if err != nil {
 			hlog.Fatalf("server stopped with error:%s", err)
 		}
-	}(p, context.Background())
+	}(App.TraceStruct.Provider, context.Background())
 
 	//初始化服务
-	container.InitGlobalContainer(config)
-	App := container.GetGlobalContainer()
+
 	middleware.InitGlobalAuthMiddleware(App.AuthRpcClient, App.UserRpcClient)
 
 	//初始化server
@@ -49,11 +41,11 @@ func main() {
 	}
 
 	h := server.Default(
-		tracer,
+		App.TraceStruct.Option,
 		server.WithHostPorts(addr.String()),
 	)
 
-	h.Use(hertztracing.ServerMiddleware(cfg))
+	h.Use(hertztracing.ServerMiddleware(App.TraceStruct.Config))
 	h.Use(global_middleware.TraceIdMiddleware())
 	register(h)
 	h.Spin()

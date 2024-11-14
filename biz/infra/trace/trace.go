@@ -7,7 +7,13 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
 )
 
-func InitTrace(config *config.Config) (provider.OtelProvider, serverconfig.Option, *hertztracing.Config) {
+type TraceSturct struct {
+	Provider provider.OtelProvider
+	Option   serverconfig.Option
+	Config   *hertztracing.Config
+}
+
+func InitTrace(config *config.Config) *TraceSturct {
 	p := provider.NewOpenTelemetryProvider(
 		provider.WithServiceName(config.ServerConfig.ServiceName),
 		provider.WithExportEndpoint(config.OpenTelemetryConfig.Endpoint),
@@ -15,6 +21,10 @@ func InitTrace(config *config.Config) (provider.OtelProvider, serverconfig.Optio
 	)
 	print(config.ServerConfig.ServiceName)
 	tracer, cfg := hertztracing.NewServerTracer()
-	return p, tracer, cfg
+	return &TraceSturct{
+		Provider: p,
+		Option:   tracer,
+		Config:   cfg,
+	}
 
 }
