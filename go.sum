@@ -148,6 +148,8 @@ github.com/li1553770945/personal-project-service v0.0.0-20241114062307-5f6ba3dd7
 github.com/li1553770945/personal-project-service v0.0.0-20241114062307-5f6ba3dd7238/go.mod h1:jJ1Qy854LoILiF/j+EXT+avdq0xKzSdkUywzYl5b6Mo=
 github.com/li1553770945/sheepim-auth-service v0.0.0-20241109133116-c6fc6769def4 h1:/AtCGEMlWUNkKly74a1l7CVJsDnoXurQubeBHdYiwNU=
 github.com/li1553770945/sheepim-auth-service v0.0.0-20241109133116-c6fc6769def4/go.mod h1:FJluAfCfnw4tFfkeFn15W2l8k5IV5sWjRZAl6GmaHgA=
+github.com/li1553770945/sheepim-room-service v0.0.0-20241116135033-a7640c148663 h1:7di+Jy83kDPmjm3lxl1+JkV7Qxws+SvepGuhTWlKEQ8=
+github.com/li1553770945/sheepim-room-service v0.0.0-20241116135033-a7640c148663/go.mod h1:ZzUtOdrN+HfD55Hs4VFQW2npxngQXuI59f0o9DtplBA=
 github.com/li1553770945/sheepim-user-service v0.0.0-20241109174451-f4bf6bdeb5d2 h1:ocT9J2xfRwdQOTSA8OcJ7QREvNB4Ex8y5d2SkX2yRrc=
 github.com/li1553770945/sheepim-user-service v0.0.0-20241109174451-f4bf6bdeb5d2/go.mod h1:9TQt4tZ7VEcizVNQuGxT9/sfGpOFOhvbVJfZmh3mY6M=
 github.com/matttproud/golang_protobuf_extensions v1.0.4 h1:mmDVorXM7PCGKw94cs5zkfA9PSy5pEvNWRP0ET0TIVo=

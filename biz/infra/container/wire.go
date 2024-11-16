@@ -12,6 +12,7 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/auth"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/feedback"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/project"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/room"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/user"
 )
 
@@ -26,12 +27,14 @@ func GetContainer(env string) *Container {
 		rpc.NewAuthClient,
 		rpc.NewProjectClient,
 		rpc.NewFeedbackClient,
+		rpc.NewRoomClient,
 
 		//controller
 		user.NewUserController,
 		auth.NewAuthController,
 		project.NewProjectController,
 		feedback.NewFeedbackController,
+		room.NewRoomController,
 
 		NewContainer,
 	))

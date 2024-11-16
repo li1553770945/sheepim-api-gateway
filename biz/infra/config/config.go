@@ -22,6 +22,7 @@ type RpcConfig struct {
 	AuthServiceName     string `yaml:"auth-service-name"`
 	ProjectServiceName  string `yaml:"project-service-name"`
 	FeedbackServiceName string `yaml:"feedback-service-name"`
+	RoomServiceName     string `yaml:"room-service-name"`
 }
 
 type EtcdConfig struct {

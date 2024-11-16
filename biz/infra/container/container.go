@@ -7,6 +7,7 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/auth"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/feedback"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/project"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/room"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/user"
 	"github.com/li1553770945/sheepim-auth-service/kitex_gen/auth/authservice"
 	"github.com/li1553770945/sheepim-user-service/kitex_gen/user/userservice"
@@ -25,6 +26,7 @@ type Container struct {
 	AuthController     auth.IAuthController
 	ProjectController  project.IProjectController
 	FeedbackController feedback.IFeedbackController
+	RoomController     room.IRoomController
 }
 
 var APP *Container
@@ -50,6 +52,7 @@ func NewContainer(config *config.Config,
 	authController auth.IAuthController,
 	projectController project.IProjectController,
 	feedbackController feedback.IFeedbackController,
+	roomController room.IRoomController,
 
 	authRpcClient authservice.Client,
 	userRpcClient userservice.Client,
@@ -66,6 +69,7 @@ func NewContainer(config *config.Config,
 		AuthController:     authController,
 		ProjectController:  projectController,
 		FeedbackController: feedbackController,
+		RoomController:     roomController,
 	}
 
 }

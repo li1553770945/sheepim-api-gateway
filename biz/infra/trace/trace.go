@@ -19,7 +19,6 @@ func InitTrace(config *config.Config) *TraceSturct {
 		provider.WithExportEndpoint(config.OpenTelemetryConfig.Endpoint),
 		provider.WithInsecure(),
 	)
-	print(config.ServerConfig.ServiceName)
 	tracer, cfg := hertztracing.NewServerTracer()
 	return &TraceSturct{
 		Provider: p,

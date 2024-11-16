@@ -17,6 +17,7 @@ require (
 	github.com/li1553770945/personal-feedback-service v0.0.0-20241110120426-cf2cb99a8a3a
 	github.com/li1553770945/personal-project-service v0.0.0-20241114062307-5f6ba3dd7238
 	github.com/li1553770945/sheepim-auth-service v0.0.0-20241109133116-c6fc6769def4
+	github.com/li1553770945/sheepim-room-service v0.0.0-20241116135033-a7640c148663
 	github.com/li1553770945/sheepim-user-service v0.0.0-20241109174451-f4bf6bdeb5d2
 	go.opentelemetry.io/otel/trace v1.32.0
 	gopkg.in/yaml.v3 v3.0.1
