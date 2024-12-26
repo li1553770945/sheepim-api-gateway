@@ -7,7 +7,7 @@ WORKDIR /app
 # 复制项目文件到容器中
 COPY . .
 
-ENV ENV=production GOPROXY=https://goproxy.cn
+ENV ENV=production
 
 # 运行 build-app.sh 构建项目
 RUN chmod +x build-app.sh && ./build-app.sh
