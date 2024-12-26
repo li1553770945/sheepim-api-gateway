@@ -18,9 +18,9 @@ func GetFeedbackCategories(ctx context.Context, c *app.RequestContext) {
 	App := container.GetGlobalContainer()
 	resp := App.FeedbackController.GetFeedbackCategories(ctx)
 	response := map[string]interface{}{
-		"code":    resp.Code,
-		"message": resp.Message,
-		"data":    resp.Data,
+		"code": resp.Code,
+		"msg":  resp.Message,
+		"data": resp.Data,
 	}
 	c.JSON(consts.StatusOK, response)
 }
@@ -98,5 +98,10 @@ func GetReply(ctx context.Context, c *app.RequestContext) {
 func GetUnreadFeedback(ctx context.Context, c *app.RequestContext) {
 	App := container.GetGlobalContainer()
 	resp := App.FeedbackController.GetUnreadFeedback(ctx)
-	c.JSON(consts.StatusOK, resp)
+	response := map[string]interface{}{
+		"code": resp.Code,
+		"msg":  resp.Message,
+		"data": resp.Data,
+	}
+	c.JSON(consts.StatusOK, response)
 }
