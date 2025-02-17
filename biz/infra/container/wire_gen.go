@@ -13,6 +13,7 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/auth"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/feedback"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/file"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/project"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/room"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/user"
@@ -34,6 +35,8 @@ func GetContainer(env string) *Container {
 	iFeedbackController := feedback.NewFeedbackController(feedbackserviceClient)
 	roomserviceClient := rpc.NewRoomClient(configConfig)
 	iRoomController := room.NewRoomController(roomserviceClient)
-	container := NewContainer(configConfig, traceSturct, logger, iUserController, iAuthController, iProjectController, iFeedbackController, iRoomController, authserviceClient, client)
+	fileserviceClient := rpc.NewFileClient(configConfig)
+	iFileController := file.NewFileController(fileserviceClient)
+	container := NewContainer(configConfig, traceSturct, logger, iUserController, iAuthController, iProjectController, iFeedbackController, iRoomController, iFileController, authserviceClient, client, fileserviceClient)
 	return container
 }

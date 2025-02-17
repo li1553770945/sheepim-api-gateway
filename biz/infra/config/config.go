@@ -23,6 +23,7 @@ type RpcConfig struct {
 	ProjectServiceName  string `yaml:"project-service-name"`
 	FeedbackServiceName string `yaml:"feedback-service-name"`
 	RoomServiceName     string `yaml:"room-service-name"`
+	FileServiceName     string `yaml:"file-service-name"`
 }
 
 type EtcdConfig struct {

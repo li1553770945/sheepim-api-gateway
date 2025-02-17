@@ -16,7 +16,7 @@ type IFileController interface {
 	DeleteFile(ctx context.Context, req *file.DeleteFileReq) (resp *file.DeleteFileResp)
 }
 
-func NewAuthController(fileRpcClient fileservice.Client) IFileController {
+func NewFileController(fileRpcClient fileservice.Client) IFileController {
 	return &FileControllerImpl{
 		fileRpcClient: fileRpcClient,
 	}
