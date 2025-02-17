@@ -7,6 +7,7 @@ hz update -idl idl/auth.thrift
 hz update -idl idl/project.thrift   
 hz update -idl idl/feedback.thrift   
 hz update -idl idl/room.thrift
+hz update -idl idl/file.thrift
 
 cd biz/infra/container
 wire
@@ -15,22 +16,24 @@ wire
 
 ```yml
 
-server:
-  listen-address: 0.0.0.0:8888
-  service-name: sheepim-user-controller
 
+server:
+  listen-address: 0.0.0.0:9100
+  service-name: sheepim-api-gateway
 etcd:
-  endpoint: 127.0.0.1:2379
+  endpoint:
+    - localhost:2379
 
 open-telemetry:
-  endpoint: 127.0.0.1:4317
+  endpoint: localhost:4417
 
-database:
-  username: xxx
-  password: xxx
-  database: xxx
-  address: xxx
-  port: xxx
+rpc:
+  user-service-name: sheepim-user-service
+  auth-service-name: sheepim-auth-service
+  project-service-name: personal-project-service
+  room-service-name: sheepim-room-service
+  feedback-service-name: personal-feedback-service
+  file-service-name: personal-file-service
 
 ```
 
