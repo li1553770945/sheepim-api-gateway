@@ -20,7 +20,7 @@ func Register(r *server.Hertz) {
 	{
 		_api := root.Group("/api", _apiMw()...)
 		_api.POST("/file", append(_uploadfileMw(), file.UploadFile)...)
-		_api.POST("/file", append(_downloadfileMw(), file.DownloadFile)...)
+		_api.GET("/file", append(_downloadfileMw(), file.DownloadFile)...)
 		_api.DELETE("/file", append(_deletefileMw(), file.DeleteFile)...)
 	}
 }

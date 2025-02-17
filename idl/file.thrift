@@ -44,6 +44,6 @@ struct DeleteFileResp{
 }
 service FileController {
     UploadFileResp UploadFile(UploadFileReq req)(api.post="/api/file");
-    DownloadFileResp DownloadFile(DownloadFileReq req)(api.post="/api/file");
+    DownloadFileResp DownloadFile(DownloadFileReq req)(api.get="/api/file");
     DeleteFileResp DeleteFile(DeleteFileReq req)(api.delete="/api/file");
 }
