@@ -31,9 +31,9 @@ func UploadFile(ctx context.Context, c *app.RequestContext) {
 	c.JSON(consts.StatusOK, resp)
 }
 
-// DownloadFileReq .
-// @router /api/file [POST]
-func DownloadFileReq(ctx context.Context, c *app.RequestContext) {
+// DownloadFile .
+// @router /api/file [GET]
+func DownloadFile(ctx context.Context, c *app.RequestContext) {
 	var req file.DownloadFileReq
 	err := c.BindAndValidate(&req)
 	if err != nil {
@@ -64,21 +64,5 @@ func DeleteFile(ctx context.Context, c *app.RequestContext) {
 
 	App := container.GetGlobalContainer()
 	resp := App.FileController.DeleteFile(ctx, &req)
-	c.JSON(consts.StatusOK, resp)
-}
-
-// DownloadFile .
-// @router /api/file [POST]
-func DownloadFile(ctx context.Context, c *app.RequestContext) {
-	var err error
-	var req file.DownloadFileReq
-	err = c.BindAndValidate(&req)
-	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
-		return
-	}
-
-	resp := new(file.DownloadFileResp)
-
 	c.JSON(consts.StatusOK, resp)
 }
