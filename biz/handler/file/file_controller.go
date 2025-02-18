@@ -66,3 +66,21 @@ func DeleteFile(ctx context.Context, c *app.RequestContext) {
 	resp := App.FileController.DeleteFile(ctx, &req)
 	c.JSON(consts.StatusOK, resp)
 }
+
+// FileInfo .
+// @router /api/files [GET]
+func FileInfo(ctx context.Context, c *app.RequestContext) {
+	var req file.FileInfoReq
+	err := c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(consts.StatusOK, utils.H{
+			"code": constant.InvalidInput,
+			"msg":  "参数校验失败:" + err.Error(),
+		})
+		return
+	}
+
+	App := container.GetGlobalContainer()
+	resp := App.FileController.FileInfo(ctx, &req)
+	c.JSON(consts.StatusOK, resp)
+}

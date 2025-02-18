@@ -59,3 +59,21 @@ func (c *FileControllerImpl) DeleteFile(ctx context.Context, req *file.DeleteFil
 	httpResp := assembler.DeleteFileRespRpcToHttp(rpcResp)
 	return httpResp
 }
+
+func (c *FileControllerImpl) FileInfo(ctx context.Context, req *file.FileInfoReq) (resp *file.FileInfoResp) {
+	hlog.CtxInfof(ctx, "调用文件信息服务")
+
+	rpcReq := assembler.FileInfoReqHttpToRpc(req)
+	rpcResp, err := c.fileRpcClient.FileInfo(ctx, rpcReq)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "调用删除文件服务失败: %s", err.Error())
+		return &file.FileInfoResp{
+			Code:    constant.SystemError,
+			Message: "系统错误：调用删除文件服务失败",
+		}
+	}
+	hlog.CtxInfof(ctx, "调用删除文件服务成功，服务返回状态码: %d", rpcResp.BaseResp.Code)
+
+	httpResp := assembler.FileInfoRespRpcToHttp(rpcResp)
+	return httpResp
+}

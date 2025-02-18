@@ -53,3 +53,22 @@ func DeleteFileRespRpcToHttp(rpcResp *rpc.DeleteFileResp) (httpResp *http.Delete
 		Message: rpcResp.BaseResp.Message,
 	}
 }
+
+func FileInfoReqHttpToRpc(httpReq *http.FileInfoReq) (rpcReq *rpc.FileInfoReq) {
+	return &rpc.FileInfoReq{
+		Key: httpReq.Key,
+	}
+}
+
+func FileInfoRespRpcToHttp(rpcResp *rpc.FileInfoResp) (httpResp *http.FileInfoResp) {
+	return &http.FileInfoResp{
+		Code:    rpcResp.BaseResp.Code,
+		Message: rpcResp.BaseResp.Message,
+		Data: &http.FileInfoRespData{
+			Name:         rpcResp.Name,
+			UploaderName: rpcResp.UploaderName,
+			UploaderUID:  rpcResp.UploaderUid,
+			CreatedAt:    rpcResp.CreatedAt,
+		},
+	}
+}

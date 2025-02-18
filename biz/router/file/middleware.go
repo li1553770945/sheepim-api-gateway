@@ -38,3 +38,13 @@ func _downloadfileMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _fileinfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _filesMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
