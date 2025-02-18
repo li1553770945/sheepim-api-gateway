@@ -39,7 +39,7 @@ struct DeleteFileResp{
     2: required string message;
 }
 service FileController {
-    UploadFileResp UploadFile(UploadFileReq req)(api.post="/api/file");
-    DownloadFileResp DownloadFile(DownloadFileReq req)(api.get="/api/file");
-    DeleteFileResp DeleteFile(DeleteFileReq req)(api.delete="/api/file");
+    UploadFileResp UploadFile(UploadFileReq req)(api.post="/api/files");
+    DownloadFileResp DownloadFile(DownloadFileReq req)(api.get="/api/files");
+    DeleteFileResp DeleteFile(DeleteFileReq req)(api.delete="/api/files");
 }
