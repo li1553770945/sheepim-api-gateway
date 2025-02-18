@@ -18,10 +18,8 @@ func UploadFileRespRpcToHttp(rpcResp *rpc.UploadFileResp) (httpResp *http.Upload
 		Code:    rpcResp.BaseResp.Code,
 		Message: rpcResp.BaseResp.Message,
 		Data: &http.UploadFileRespData{
-			Ak:      rpcResp.Ak,
-			Sk:      rpcResp.Sk,
-			Key:     rpcResp.Key,
-			OssPath: rpcResp.OssPath,
+			Key:       rpcResp.Key,
+			SignedUrl: rpcResp.SignedUrl,
 		},
 	}
 }
@@ -37,9 +35,8 @@ func DownloadFileRespRpcToHttp(rpcResp *rpc.DownloadFileResp) (httpResp *http.Do
 		Code:    rpcResp.BaseResp.Code,
 		Message: rpcResp.BaseResp.Message,
 		Data: &http.DownloadFileRespData{
-			Ak:      rpcResp.Ak,
-			Sk:      rpcResp.Sk,
-			OssPath: rpcResp.OssPath,
+			Name:      rpcResp.Name,
+			SignedUrl: rpcResp.SignedUrl,
 		},
 	}
 }

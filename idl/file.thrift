@@ -7,10 +7,8 @@ struct UploadFileReq{
 }
 
 struct UploadFileRespData{
-    1: required string ak;
-    2: required string sk;
-    3: required string key;
-    4: required string ossPath;
+    1: required string key;
+    2: required string signedUrl;
 }
 
 struct UploadFileResp{
@@ -23,10 +21,8 @@ struct DownloadFileReq{
     1: required string key;
 }
 struct DownloadFileRespData{
-    1: required string ak;
-    2: required string sk;
-    3: required string ossPath;
-    4: required string name;
+    1: required string signedUrl;
+    2: required string name;
 }
 
 struct DownloadFileResp{
