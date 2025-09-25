@@ -48,3 +48,13 @@ func _filesMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _directdownloadMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _files0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

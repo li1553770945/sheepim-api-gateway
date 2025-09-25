@@ -55,10 +55,10 @@ struct FileInfoResp{
     3: required FileInfoRespData data;
 }
 
-
 service FileController {
     UploadFileResp UploadFile(UploadFileReq req)(api.post="/api/files");
     DownloadFileResp DownloadFile(DownloadFileReq req)(api.get="/api/files/download");
     DeleteFileResp DeleteFile(DeleteFileReq req)(api.delete="/api/files");
     FileInfoResp FileInfo(FileInfoReq req)(api.get="/api/files");
+    DownloadFileResp DirectDownload(DownloadFileReq req)(api.get="/api/files/direct-download");
 }

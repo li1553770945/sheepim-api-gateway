@@ -2,6 +2,7 @@ package file
 
 import (
 	"context"
+
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/assembler"
@@ -75,5 +76,23 @@ func (c *FileControllerImpl) FileInfo(ctx context.Context, req *file.FileInfoReq
 	hlog.CtxInfof(ctx, "调用删除文件服务成功，服务返回状态码: %d", rpcResp.BaseResp.Code)
 
 	httpResp := assembler.FileInfoRespRpcToHttp(rpcResp)
+	return httpResp
+}
+
+func (c *FileControllerImpl) DirectDownload(ctx context.Context, req *file.DownloadFileReq) (resp *file.DownloadFileResp) {
+	hlog.CtxInfof(ctx, "调用直接下载文件服务")
+
+	rpcReq := assembler.DownloadFileReqHttpToRpc(req)
+	rpcResp, err := c.fileRpcClient.DownloadFile(ctx, rpcReq)
+	if err != nil {
+		hlog.CtxErrorf(ctx, "调用直接下载文件服务失败: %s", err.Error())
+		return &file.DownloadFileResp{
+			Code:    constant.SystemError,
+			Message: "系统错误：调用直接下载文件服务失败",
+		}
+	}
+	hlog.CtxInfof(ctx, "调用直接下载文件服务成功，服务返回状态码: %d", rpcResp.BaseResp.Code)
+
+	httpResp := assembler.DownloadFileRespRpcToHttp(rpcResp)
 	return httpResp
 }

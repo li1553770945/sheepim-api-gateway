@@ -4,6 +4,7 @@ package file
 
 import (
 	"context"
+
 	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/container"
@@ -82,5 +83,31 @@ func FileInfo(ctx context.Context, c *app.RequestContext) {
 
 	App := container.GetGlobalContainer()
 	resp := App.FileController.FileInfo(ctx, &req)
+	c.JSON(consts.StatusOK, resp)
+}
+
+// DirectDownload .
+// @router /api/files/direct-download [GET]
+func DirectDownload(ctx context.Context, c *app.RequestContext) {
+	var req file.DownloadFileReq
+	err := c.BindAndValidate(&req)
+	if err != nil {
+		c.JSON(consts.StatusOK, utils.H{
+			"code": constant.InvalidInput,
+			"msg":  "参数校验失败:" + err.Error(),
+		})
+		return
+	}
+
+	App := container.GetGlobalContainer()
+	resp := App.FileController.DirectDownload(ctx, &req)
+
+	// 如果 Code 为 0，直接重定向到 signedUrl
+	if resp.Code == 0 && resp.Data != nil && resp.Data.SignedUrl != "" {
+		c.Redirect(consts.StatusFound, []byte(resp.Data.SignedUrl))
+		return
+	}
+
+	// 有错误时返回 JSON
 	c.JSON(consts.StatusOK, resp)
 }
