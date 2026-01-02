@@ -9,6 +9,7 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/log"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/rpc"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/aichat"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/auth"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/feedback"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/file"
@@ -30,6 +31,7 @@ func GetContainer(env string) *Container {
 		rpc.NewFeedbackClient,
 		rpc.NewRoomClient,
 		rpc.NewFileClient,
+		rpc.NewAIChatClient,
 
 		//controller
 		user.NewUserController,
@@ -38,6 +40,7 @@ func GetContainer(env string) *Container {
 		feedback.NewFeedbackController,
 		room.NewRoomController,
 		file.NewFileController,
+		aichat.NewAIChatController,
 
 		NewContainer,
 	))

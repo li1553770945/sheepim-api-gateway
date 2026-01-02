@@ -8,6 +8,9 @@ hz update -idl idl/project.thrift
 hz update -idl idl/feedback.thrift   
 hz update -idl idl/room.thrift
 hz update -idl idl/file.thrift
+hz update -idl idl/aichat.thrift
+
+
 
 cd biz/infra/container
 wire

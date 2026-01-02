@@ -1,10 +1,14 @@
 package container
 
 import (
+	"sync"
+
 	"github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
+	"github.com/li1553770945/personal-aichat-service/kitex_gen/aichat/aichatservice"
 	"github.com/li1553770945/personal-file-service/kitex_gen/file/fileservice"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/config"
 	"github.com/li1553770945/sheepim-api-gateway/biz/infra/trace"
+	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/aichat"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/auth"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/feedback"
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/file"
@@ -13,7 +17,6 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/internal/controller/user"
 	"github.com/li1553770945/sheepim-auth-service/kitex_gen/auth/authservice"
 	"github.com/li1553770945/sheepim-user-service/kitex_gen/user/userservice"
-	"sync"
 )
 
 type Container struct {
@@ -31,6 +34,7 @@ type Container struct {
 	FeedbackController feedback.IFeedbackController
 	RoomController     room.IRoomController
 	FileController     file.IFileController
+	AIChatController   aichat.IAIChatController
 }
 
 var APP *Container
@@ -62,6 +66,8 @@ func NewContainer(config *config.Config,
 	authRpcClient authservice.Client,
 	userRpcClient userservice.Client,
 	fileRpcClient fileservice.Client,
+	aichatRpcClient aichatservice.Client,
+	aichatController aichat.IAIChatController,
 ) *Container {
 	return &Container{
 		Config:      config,
@@ -78,6 +84,7 @@ func NewContainer(config *config.Config,
 		FeedbackController: feedbackController,
 		RoomController:     roomController,
 		FileController:     fileController,
+		AIChatController:   aichatController,
 	}
 
 }

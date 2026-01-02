@@ -2,10 +2,11 @@ package config
 
 import (
 	"fmt"
-	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
-	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"
+
+	"github.com/li1553770945/sheepim-api-gateway/biz/constant"
+	"gopkg.in/yaml.v3"
 )
 
 type ServerConfig struct {
@@ -24,6 +25,7 @@ type RpcConfig struct {
 	FeedbackServiceName string `yaml:"feedback-service-name"`
 	RoomServiceName     string `yaml:"room-service-name"`
 	FileServiceName     string `yaml:"file-service-name"`
+	AIChatServiceName   string `yaml:"aichat-service-name"`
 }
 
 type EtcdConfig struct {
