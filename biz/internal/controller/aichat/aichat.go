@@ -14,11 +14,6 @@ import (
 	"github.com/li1553770945/sheepim-api-gateway/biz/model/aichat"
 )
 
-type AIChatMessage struct {
-	EventType string `json:"event_type"`
-	Message   string `json:"message"`
-}
-
 func (client *AIChatControllerImpl) SendMessage(ctx context.Context, req *aichat.AIChatReq, c *app.RequestContext) (resp *aichat.AIChatResp) {
 	if req == nil {
 		hlog.Error("HTTP Request req is nil")
@@ -40,7 +35,6 @@ func (client *AIChatControllerImpl) SendMessage(ctx context.Context, req *aichat
 			Message: "系统错误：调用聊天服务失败:" + err.Error(),
 		}
 	}
-	println("Server Got LastEventID", sse.GetLastEventID(&c.Request))
 	w := sse.NewWriter(c)
 
 	for {
@@ -53,11 +47,15 @@ func (client *AIChatControllerImpl) SendMessage(ctx context.Context, req *aichat
 			// 正常结束不通过标准HTTP返回
 			return nil
 		}
-		sseResp := &AIChatMessage{
+		sseResp := &aichat.AIChatSSEData{
 			EventType: resp.EventType,
-			Message:   resp.Data,
+			Data:      resp.Data,
 		}
 		jsonBytes, _ := json.Marshal(sseResp)
-		w.WriteEvent("id-x", "message", jsonBytes)
+		err = w.WriteEvent("id-x", "message", jsonBytes)
+		if err != nil {
+			hlog.Errorf("sse发送消息失败:%s", err.Error())
+			return nil
+		}
 	}
 }

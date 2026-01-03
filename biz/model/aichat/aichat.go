@@ -9,7 +9,8 @@ import (
 )
 
 type AIChatReq struct {
-	Message string `thrift:"message,1,required" form:"message,required" json:"message,required" query:"message,required"`
+	Message        string  `thrift:"message,1,required" form:"message,required" json:"message,required" query:"message,required"`
+	ConversationID *string `thrift:"conversation_id,2,optional" form:"conversation_id" json:"conversation_id,omitempty" query:"conversation_id"`
 }
 
 func NewAIChatReq() *AIChatReq {
@@ -23,8 +24,22 @@ func (p *AIChatReq) GetMessage() (v string) {
 	return p.Message
 }
 
+var AIChatReq_ConversationID_DEFAULT string
+
+func (p *AIChatReq) GetConversationID() (v string) {
+	if !p.IsSetConversationID() {
+		return AIChatReq_ConversationID_DEFAULT
+	}
+	return *p.ConversationID
+}
+
 var fieldIDToName_AIChatReq = map[int16]string{
 	1: "message",
+	2: "conversation_id",
+}
+
+func (p *AIChatReq) IsSetConversationID() bool {
+	return p.ConversationID != nil
 }
 
 func (p *AIChatReq) Read(iprot thrift.TProtocol) (err error) {
@@ -53,6 +68,14 @@ func (p *AIChatReq) Read(iprot thrift.TProtocol) (err error) {
 					goto ReadFieldError
 				}
 				issetMessage = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
@@ -102,6 +125,17 @@ func (p *AIChatReq) ReadField1(iprot thrift.TProtocol) error {
 	p.Message = _field
 	return nil
 }
+func (p *AIChatReq) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field *string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = &v
+	}
+	p.ConversationID = _field
+	return nil
+}
 
 func (p *AIChatReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -111,6 +145,10 @@ func (p *AIChatReq) Write(oprot thrift.TProtocol) (err error) {
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
 			goto WriteFieldError
 		}
 	}
@@ -146,6 +184,25 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *AIChatReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if p.IsSetConversationID() {
+		if err = oprot.WriteFieldBegin("conversation_id", thrift.STRING, 2); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(*p.ConversationID); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *AIChatReq) String() string {
@@ -551,6 +608,208 @@ func (p *AIChatResp) String() string {
 
 }
 
+type AIChatSSEData struct {
+	EventType string `thrift:"event_type,1,required" form:"event_type,required" json:"event_type,required" query:"event_type,required"`
+	Data      string `thrift:"data,2,required" form:"data,required" json:"data,required" query:"data,required"`
+}
+
+func NewAIChatSSEData() *AIChatSSEData {
+	return &AIChatSSEData{}
+}
+
+func (p *AIChatSSEData) InitDefault() {
+}
+
+func (p *AIChatSSEData) GetEventType() (v string) {
+	return p.EventType
+}
+
+func (p *AIChatSSEData) GetData() (v string) {
+	return p.Data
+}
+
+var fieldIDToName_AIChatSSEData = map[int16]string{
+	1: "event_type",
+	2: "data",
+}
+
+func (p *AIChatSSEData) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetEventType bool = false
+	var issetData bool = false
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetEventType = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetData = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	if !issetEventType {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetData {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AIChatSSEData[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+RequiredFieldNotSetError:
+	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_AIChatSSEData[fieldId]))
+}
+
+func (p *AIChatSSEData) ReadField1(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.EventType = _field
+	return nil
+}
+func (p *AIChatSSEData) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Data = _field
+	return nil
+}
+
+func (p *AIChatSSEData) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("AIChatSSEData"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *AIChatSSEData) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("event_type", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.EventType); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *AIChatSSEData) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("data", thrift.STRING, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Data); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *AIChatSSEData) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("AIChatSSEData(%+v)", *p)
+
+}
+
+// 如果正常只会使用SSE返回SSEData类型数据，异常情况才会使用AIChatResp
 type AIChatController interface {
 	SendMessage(ctx context.Context, request *AIChatReq) (r *AIChatResp, err error)
 }

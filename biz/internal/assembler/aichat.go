@@ -7,6 +7,7 @@ import (
 
 func AIChatReqHttpToRpc(req *aichat.AIChatReq) *rpc.SendMessageReq {
 	return &rpc.SendMessageReq{
-		Message: req.Message,
+		Message:        req.Message,
+		ConversationId: req.ConversationID,
 	}
 }
